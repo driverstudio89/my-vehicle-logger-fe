@@ -1,0 +1,13 @@
+.home {
+    padding: 2rem 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+.vehicle-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 1rem;
+    width: 100%;
+}
