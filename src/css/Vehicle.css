@@ -1,0 +1,93 @@
+.vehicle {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    border: rgb(122, 122, 122) solid 1px;
+    background-color: #303436;
+    padding: 25px 200px;
+    border-radius: 10px;
+    max-width: 1024;
+}
+
+.vehicle h3 {
+    font-size: 32px;
+}
+
+.vehicle-info-container {
+    display: flex;
+    flex-direction: row;
+    gap: 150px;
+}
+
+
+.vehicle-image {
+    width: 70%;
+    flex: 1;
+}
+
+.vehicle-image img {
+    width: 350px;
+    object-fit: fill;
+}
+
+.vehicle-page-info {
+    flex: 1;
+    width: 30%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    
+}
+
+.vehicle-page-info h3 {
+    font-size: 1.7rem;
+    margin: 0px;
+    padding: 0px;
+    text-align: left;
+
+}
+
+.vehicle-page-info p {
+    color: #999;
+    font-size: 1.2rem;
+    margin: 0;
+    text-align: left;
+}
+
+.event-form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.event-form label {
+    margin-left: 25px;
+    margin-bottom: 5px;
+}
+
+.form-input {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    flex-grow: 1;
+    height: 2rem;
+    display: flex;
+}
+
+.event-form textarea {
+    height: 6rem;
+}
+
+.btn-submit {
+    padding: 8px 30px;
+    width: fit-content;
+    background-color: rgb(17, 77, 5);
+    border-radius: 7px;
+    border: green solid 2px;
+    align-self: center;
+
+
+}
+
+
+

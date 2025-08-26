@@ -20,7 +20,7 @@
     object-fit: fill;
 }
 
-.vehicle-info {
+.vehicle-card-info {
     background-color: rgb(45, 45, 45);
     padding: 10px;
     flex: 1;
@@ -30,13 +30,13 @@
     text-align: left;
 }
 
-.vehicle-info h3 {
+.vehicle-card-info h3 {
     font-size: 1rem;
     margin: 0px;
     padding: 0px;
 }
 
-.vehicle-info p {
+.vehicle-card-info p {
     color: #999;
     font-size: 0.9rem;
     margin: 0;
