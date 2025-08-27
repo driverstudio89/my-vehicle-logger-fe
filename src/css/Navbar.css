@@ -1,0 +1,33 @@
+.navbar {
+    font-size: 20px;
+    font-family: monospace;
+    display: flex;
+    padding: 1rem 2rem;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0e1042;
+    box-shadow: rgba(41, 113, 167, 0.2) 2px 2px 8px 0px;
+}
+
+.navbar-app {
+    background-color: #104172;
+    border: rgb(89, 162, 197) solid 2px;
+    box-shadow: rgba(41, 113, 167, 0.2) 3px 3px 8px 1px;
+    border-radius: 28px;
+    padding: 7px 14px;
+}
+
+.navbar-links {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    justify-content: space-between;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: white;
+}
+
+
+

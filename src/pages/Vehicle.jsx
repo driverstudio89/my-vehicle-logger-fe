@@ -1,5 +1,7 @@
 import "../css/Vehicle.css";
 import { useState } from "react";
+import AddEventForm from "../components/AddEventForm";
+import Event from "../components/Event";
 
 const vehicle = {
   id: 1,
@@ -13,26 +15,30 @@ const vehicle = {
   created: "2024-09-23",
 };
 
+const events = [
+  {
+    id: 1,
+    name: "Oil change",
+    description: "changed oil and filters",
+    kilometers: "123344",
+    startDate: "2024-09-23",
+    endDate: "2024-09-23",
+  },
+  {
+    id: 1,
+    name: "Tyre rotation",
+    description: "Change summer tyres with winter tyres, Change summer tyres with winter tyres, Change summer tyres with winter tyres",
+    kilometers: "223344",
+    startDate: "2024-09-23",
+    endDate: "2024-09-23",
+  },
+];
+
 function Vehicle() {
-  const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    kilometers: "",
-    startDate: "",
-    endDate: "",
-  });
+  const [addEventClicked, setAddEventClicked] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
+  const addEventClickHandler = (e) => {
+    setAddEventClicked(true);
   };
 
   return (
@@ -56,59 +62,14 @@ function Vehicle() {
           <p>{vehicle.created}</p>
         </div>
       </div>
-      <div>
-        <h3>add event</h3>
-        <form onSubmit={handleSubmit} className="event-form">
-          <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            value={formData.name}
-            onChange={handleChange}
-            className="form-input"
-          />
-          <label>Description:</label>
-          <textarea
-            type="text"
-            name="description"
-            placeholder="Description"
-            value={formData.description}
-            onChange={handleChange}
-            className="form-input"
-          />
-          <label>Kilometers:</label>
-          <input
-            type="number"
-            name="kilometers"
-            placeholder="Kilometers"
-            value={formData.kilometers}
-            onChange={handleChange}
-            className="form-input"
-          />
-          <label>Start date:</label>
-          <input
-            type="date"
-            name="startDate"
-            placeholder="Start date"
-            value={formData.startDate}
-            onChange={handleChange}
-            className="form-input"
-          />
-          <label>End date:</label>
-          <input
-            type="date"
-            name="endtDate"
-            placeholder="End date"
-            value={formData.endDate}
-            onChange={handleChange}
-            className="form-input"
-          />
-          <button type="submit" className="btn-submit">
-            Submit
-          </button>
-        </form>
-      </div>
+      <button className="btn-add-event" onClick={addEventClickHandler}>
+        Add Event
+      </button>
+      {addEventClicked ? (
+        <AddEventForm />
+      ) : (
+        events.map((event) => <Event event={event} key={event.id} />)
+      )}
     </div>
   );
 }
