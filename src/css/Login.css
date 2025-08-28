@@ -1,0 +1,43 @@
+.login {
+    margin: 25px auto;
+    align-items: center;
+    text-align: center;
+}
+
+.login h3 {
+    font-size: 28px;
+
+}
+
+.login-form {
+    margin: 25px auto;
+    border: 1px solid gray;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}
+
+.form-group {
+    display: flex;
+    flex-wrap: wrap;
+
+    padding: 8px;flex-wrap: wrap;
+}
+
+.form-group label {
+    text-align: right;
+    flex: 0.3;
+    align-self: center;
+}
+
+.form-group input {
+    margin: 5px 30px;
+    padding: 0px;
+    justify-content: end;
+    width: 300px;
+    flex: 0.7;
+
+
+}
