@@ -2,7 +2,7 @@
     font-size: 20px;
     font-family: monospace;
     display: flex;
-    padding: 1rem 2rem;
+    padding: 10px 20px;
     justify-content: space-between;
     align-items: center;
     background-color: #0e1042;
@@ -14,7 +14,7 @@
     border: rgb(89, 162, 197) solid 2px;
     box-shadow: rgba(41, 113, 167, 0.2) 3px 3px 8px 1px;
     border-radius: 28px;
-    padding: 7px 14px;
+    padding: 5px 14px;
 }
 
 .navbar-links {
@@ -22,15 +22,27 @@
     flex-direction: row;
     gap: 25px;
     justify-content: space-between;
+    
 }
 
 .nav-link {
     text-decoration: none;
     color: white;
+    align-content: center;
 }
 
 .btn-logout {
     cursor: pointer;
+    align-content: center;
+}
+
+.add-vehicle-link {
+    text-decoration: none;
+    color: white;
+    background-color: rgb(56, 116, 56);
+    padding: 5px 14px;
+    border-radius: 28px;
+    border: rgb(78, 152, 78) solid 2px;
 }
 
 

@@ -17,9 +17,12 @@ function Navbar() {
             <Link to="/" className="nav-link">Vehicle-Logger</Link>
         </div>
         <div className="navbar-links">
-            <Link to="/" className="nav-link">Home</Link>
+            
+
+            {/* <Link to="/" className="nav-link">Home</Link> */}
             {authContext.isAuthenticated ? (
                 <>
+                <Link to="/add-vehicle" className="add-vehicle-link">Add Vehicle</Link>
                 <Link to="/profile" className="nav-link">Profile</Link>
                 <div className="btn-logout" onClick={handleLogout}> Logout</div>
                 </>

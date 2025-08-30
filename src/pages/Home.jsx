@@ -13,9 +13,9 @@ function Home() {
       try {
         const myVehicles = await getVehicles();
         setVehicles(myVehicles)
-      } catch(error) {
-        console.log(error);
+      } catch(err) {
         setError("Failed to load vehicles");
+        console.log(error);
       }
     };
     loadVehicles();

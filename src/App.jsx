@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Profile from "./pages/Profile"
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import AddVehicle from "./pages/AddVehicle";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/vehicle/:id" element={<Vehicle />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/add-vehicle" element={<AddVehicle />} />
         </Routes>
       </main>
       </AuthProvider>
