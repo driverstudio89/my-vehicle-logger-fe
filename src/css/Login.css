@@ -13,6 +13,7 @@
     margin: 25px auto;
     border: 1px solid gray;
     border-radius: 8px;
+    background-color: #303030;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -38,6 +39,14 @@
     justify-content: end;
     width: 300px;
     flex: 0.7;
+}
 
-
+.btn-login {
+    font-size: 24px;
+    padding: 8px 30px;
+    width: fit-content;
+    background-color: rgb(33, 56, 28);
+    border-radius: 10px;
+    align-self: center;
+    margin: 15px;
 }
