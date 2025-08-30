@@ -1,42 +1,38 @@
 import { useState } from "react";
 import "../css/Login.css";
-import { login } from "../services/api.js"
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext.jsx";
 
 function Login() {
-
   const authContext = useAuthContext();
-  var loginFailed = [];
-
-  const [formData, setFormData] = useState({
-    email: "ivan@gmail.com",
-    password: "123456",
-  });
+  const [email, setEmail] = useState("iv");
+  const [password, setPassword] = useState("1");
+  const [errors, setErrors] = useState("");
 
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   const handleLogin = async (e) => {
-    e.preventDefault();      
+    e.preventDefault();
+
     try {
-      const accessToken = await login(formData.email, formData.password);    
-      authContext.login(accessToken);
-      navigate("/")
-      
-    } catch (error) {
-      console.log(error);
-      
-        loginFailed = error;
-    } 
-};
+      const response = await fetch("http://localhost:8080/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!!response.ok) {
+        authContext.login(data.token);
+        navigate("/");
+      } else {
+        setErrors(data);
+      }
+    } catch (err) {
+      setErrors(err.message);
+    }
+  };
 
   return (
     <div className="login">
@@ -49,8 +45,8 @@ function Login() {
             type="text"
             name="email"
             placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="form-input"
           />
         </div>
@@ -62,12 +58,16 @@ function Login() {
             type="password"
             name="password"
             placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="form-input"
           />
         </div>
-        <div className="login-error">{loginFailed}</div>
+        {errors && <div className="login-errors">
+          <p>{errors.email}</p>
+          <p>{errors.password}</p>
+        </div>}
+
         <button className="btn-login">Login</button>
       </form>
     </div>

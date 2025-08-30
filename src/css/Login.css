@@ -50,3 +50,7 @@
     align-self: center;
     margin: 15px;
 }
+
+.login-errors {
+    color: red;
+}
