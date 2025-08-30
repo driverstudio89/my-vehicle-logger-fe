@@ -2,9 +2,13 @@ import { useState } from "react";
 import "../css/Login.css";
 import { login } from "../services/api.js"
 import { useNavigate } from "react-router-dom"
-import jwtDecode from "./JwtDecode.jsx";
+import { useAuthContext } from "../context/AuthContext.jsx";
 
 function Login() {
+
+  const authContext = useAuthContext();
+  var loginFailed = [];
+
   const [formData, setFormData] = useState({
     email: "ivan@gmail.com",
     password: "123456",
@@ -21,17 +25,17 @@ function Login() {
   };
 
   const handleLogin = async (e) => {
-    e.preventDefault();    
+    e.preventDefault();      
     try {
-      const accessToken = await login(formData.email, formData.password);
-      const userData = jwtDecode(accessToken);
-      if (userData.email) {
-        navigate("/")
-      }
+      const accessToken = await login(formData.email, formData.password);    
+      authContext.login(accessToken);
+      navigate("/")
       
     } catch (error) {
-        console.error("Error logging in: ", error);
-    }
+      console.log(error);
+      
+        loginFailed = error;
+    } 
 };
 
   return (
@@ -63,6 +67,7 @@ function Login() {
             className="form-input"
           />
         </div>
+        <div className="login-error">{loginFailed}</div>
         <button className="btn-login">Login</button>
       </form>
     </div>
