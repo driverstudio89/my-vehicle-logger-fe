@@ -1,58 +1,26 @@
+import { useEffect } from "react";
 import VehicleCard from "../components/VehicleCard";
 import "../css/Home.css"
+import { useState } from "react";
+import { getVehicles } from "../services/api.js"
 
 function Home() {
-  const vehicles = [
-    {
-      id: 1,
-      make: "Ford",
-      model: "Focus",
-      registration: "CC1234CA",
-      lastKilometers: "343000",
-    },
-    {
-      id: 2,
-      make: "Fiat",
-      model: "Bravo",
-      registration: "CC1234CA",
-      lastKilometers: "415000",
-    },
-    {
-      id: 3,
-      make: "Opel",
-      model: "Corsa",
-      registration: "CC1234CA",
-      lastKilometers: "224500",
-    },
-    {
-      id: 4,
-      make: "Renault",
-      model: "Megan",
-      registration: "CC1234CA",
-      lastKilometers: "265300",
-    },
-    {
-        id: 5,
-        make: "Renault",
-        model: "Megan",
-        registration: "CC1234CA",
-        lastKilometers: "265300",
-      },
-      {
-        id: 6,
-        make: "Renault",
-        model: "Megan",
-        registration: "CC1234CA",
-        lastKilometers: "265300",
-      },
-      {
-        id: 7,
-        make: "Renault",
-        model: "Megan",
-        registration: "CC1234CA",
-        lastKilometers: "265300",
-      },
-  ];
+  const [vehicles, setVehicles] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const loadVehicles = async () => {
+      try {
+        const myVehicles = await getVehicles();
+        setVehicles(myVehicles)
+      } catch(error) {
+        console.log(error);
+        setError("Failed to load vehicles");
+      }
+    };
+    loadVehicles();
+    
+  }, []);
 
   return (
     <div className="home">

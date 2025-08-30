@@ -5,8 +5,8 @@ import { useAuthContext } from "../context/AuthContext.jsx";
 
 function Login() {
   const authContext = useAuthContext();
-  const [email, setEmail] = useState("iv");
-  const [password, setPassword] = useState("1");
+  const [email, setEmail] = useState("ivan@gmail.com");
+  const [password, setPassword] = useState("123456");
   const [errors, setErrors] = useState("");
 
   const navigate = useNavigate();
