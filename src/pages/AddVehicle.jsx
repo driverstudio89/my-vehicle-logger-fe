@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import "../css/AddVehicle.css";
+import {VehicleOptionsFromApi} from "../services/api";
 
 function AddVehicle() {
   const [formData, setFormData] = useState({
@@ -13,9 +15,12 @@ function AddVehicle() {
     description: "",
   });
 
+  const [colors, setColor] = useState([]);
+  const [categories, setCategory] = useState([]);
+  const [engines, setEngine] = useState([]);
+
   const handleAddVehicle = async (e) => {
     e.preventDefault();
-    console.log(formData);
   };
 
   const handleChange = (e) => {
@@ -25,6 +30,21 @@ function AddVehicle() {
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    const getOptions = async () => {
+      try {
+        const dataOptions = await VehicleOptionsFromApi();
+        setColor(dataOptions.colors);
+        setCategory(dataOptions.categories);
+        setEngine(dataOptions.engines);
+        
+      } catch(error) {
+        console.log(error);
+      }
+    };
+    getOptions();
+  }, []);
 
   return (
     <div className="add-vehicle">
@@ -84,48 +104,65 @@ function AddVehicle() {
 
         <div className="form-group">
           <label htmlFor="color">Color</label>
-          <input
+          <select
             id="color"
             type="text"
             name="color"
-            placeholder="Color"
             value={FormData.color}
             onChange={handleChange}
             className="form-input"
-          />
+          >
+            <option value="default">Choose Color</option>
+            {colors.map((color) => (
+              <option key={color.id} value={color}>
+                {color}
+              </option>
+            ))}
+            </select>
         </div>
 
         <div className="form-group">
           <label htmlFor="category">Category</label>
-          <input
+          <select
             id="category"
             type="text"
             name="category"
-            placeholder="Category"
             value={FormData.category}
             onChange={handleChange}
-            className="form-input"
-          />
+            className="form-input">
+            <option value="default">Choose category</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="form-group">
           <label htmlFor="engine">Engine</label>
-          <input
+          <select
             id="engine"
             type="text"
             name="engine"
-            placeholder="Engine"
             value={FormData.engine}
             onChange={handleChange}
             className="form-input"
-          />
+          >
+            <option value="default">Choose engine</option>
+            {engines.map((engine) => (
+              <option key={engine.id} value={engine}>
+                {engine}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="form-group">
           <label htmlFor="kilometers">Kilometers</label>
           <input
             id="kilometers"
-            type="text"
+            type="number"
             name="kilometers"
             placeholder="Kilometers"
             value={FormData.kilometers}
@@ -146,8 +183,6 @@ function AddVehicle() {
             className="form-input"
           />
         </div>
-
-
 
         <button className="btn-login">Add</button>
       </form>

@@ -1,15 +1,14 @@
-.login {
+.add-vehicle {
     margin: 25px auto;
     align-items: center;
     text-align: center;
 }
 
-.login h3 {
+.add-vehicle h3 {
     font-size: 28px;
-
 }
 
-.login-form {
+.add-vehicle-form {
     margin: 25px auto;
     border: 1px solid gray;
     border-radius: 8px;
@@ -17,7 +16,7 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
-    width: fit-content;
+    width: 50%
 }
 
 .form-group {
@@ -32,7 +31,7 @@
     align-self: center;
 }
 
-.form-group input {
+.form-group input, .form-group select, .form-group textarea {
     margin: 5px 30px;
     padding: 0px;
     justify-content: end;
@@ -40,16 +39,6 @@
     flex: 0.7;
 }
 
-.btn-login {
-    font-size: 24px;
-    padding: 8px 30px;
-    width: fit-content;
-    background-color: rgb(56, 116, 56);
-    border-radius: 10px;
-    align-self: center;
-    margin: 15px;
-}
-
-.login-errors {
-    color: red;
+.form-group textarea {
+    height: 6rem;
 }
