@@ -6,7 +6,7 @@ function VehicleCard({vehicle}) {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/vehicle/${vehicle.id}`);
+        navigate(`/vehicles/${vehicle.id}`);
     }
 
     return <div className="vehicle-card" onClick={handleClick}>

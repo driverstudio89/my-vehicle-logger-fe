@@ -39,7 +39,7 @@ function AddVehicle() {
       if (response.status === 201) {
         const data = await response.json();
         const id = data.id;
-        navigate(`/vehicle/${id}`);
+        navigate(`/vehicles/${id}`);
       } else {
         const data = await response.json().catch(() => ({}));
         setErrors(data);

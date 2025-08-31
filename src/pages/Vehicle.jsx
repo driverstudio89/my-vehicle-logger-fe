@@ -1,19 +1,9 @@
 import "../css/Vehicle.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddEventForm from "../components/AddEventForm";
 import Event from "../components/Event";
-
-const vehicle = {
-  id: 1,
-  make: "Ford",
-  model: "Focus",
-  registration: "CC1234CA",
-  lastKilometers: "343000",
-  year: "2012",
-  color: "red",
-  engine: "diesel",
-  created: "2024-09-23",
-};
+import { getVehicle } from "../services/api";
+import { useParams } from "react-router-dom";
 
 const events = [
   {
@@ -25,9 +15,10 @@ const events = [
     endDate: "2024-09-23",
   },
   {
-    id: 1,
+    id: 2,
     name: "Tyre rotation",
-    description: "Change summer tyres with winter tyres, Change summer tyres with winter tyres, Change summer tyres with winter tyres",
+    description:
+      "Change summer tyres with winter tyres, Change summer tyres with winter tyres, Change summer tyres with winter tyres",
     kilometers: "223344",
     startDate: "2024-09-23",
     endDate: "2024-09-23",
@@ -37,10 +28,38 @@ const events = [
 function Vehicle() {
   const [addEventClicked, setAddEventClicked] = useState(false);
 
+  const { id } = useParams();
+
   const addEventClickHandler = (e) => {
     setAddEventClicked(true);
   };
 
+  const [vehicle, setVehicle] = useState({
+    id: "",
+    make: "",
+    model: "",
+    registration: "",
+    lastKilometers: "",
+    year: "",
+    color: "",
+    engine: "",
+    created: "",
+  });
+
+  useEffect(() => {
+    const loadVehicle = async () => {
+      try {
+        const myVehicle = await getVehicle(id);
+        setVehicle(myVehicle);
+        console.log(myVehicle);
+        
+      } catch(err) {
+        console.log(err);
+      }
+    }
+    loadVehicle();
+  }, []);
+  
   return (
     <div className="vehicle">
       <h3>Vehicle info</h3>
