@@ -1,26 +1,52 @@
 import { useEffect, useState } from "react";
 import "../css/AddVehicle.css";
-import {VehicleOptionsFromApi} from "../services/api";
+import { VehicleOptionsFromApi } from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 function AddVehicle() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    make: "",
-    model: "",
-    year: "",
-    registration: "",
-    color: "",
-    category: "",
-    engine: "",
-    kilometers: "",
-    description: "",
+    make: "ford",
+    model: "focus",
+    year: "2012",
+    registration: "cc1246cc",
+    color: "BLUE",
+    category: "CAR",
+    engine: "DIESEL",
+    lastKilometers: "344000",
+    description: "blue ford",
   });
 
   const [colors, setColor] = useState([]);
   const [categories, setCategory] = useState([]);
   const [engines, setEngine] = useState([]);
+  const [errors, setErrors] = useState("");
 
   const handleAddVehicle = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("accessToken");
+    try {
+      const response = await fetch("http://localhost:8080/vehicles", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.status === 201) {
+        const data = await response.json();
+        const id = data.id;
+        navigate(`/vehicle/${id}`);
+      } else {
+        const data = await response.json().catch(() => ({}));
+        setErrors(data);
+      }
+    } catch (err) {
+      setErrors(err.massage);
+    }
   };
 
   const handleChange = (e) => {
@@ -38,8 +64,7 @@ function AddVehicle() {
         setColor(dataOptions.colors);
         setCategory(dataOptions.categories);
         setEngine(dataOptions.engines);
-        
-      } catch(error) {
+      } catch (error) {
         console.log(error);
       }
     };
@@ -62,6 +87,11 @@ function AddVehicle() {
             className="form-input"
           />
         </div>
+        {errors && (
+          <div className="error">
+            <p>{errors.make}</p>
+          </div>
+        )}
 
         <div className="form-group">
           <label htmlFor="model">Model</label>
@@ -75,6 +105,11 @@ function AddVehicle() {
             className="form-input"
           />
         </div>
+        {errors && (
+          <div className="error">
+            <p>{errors.model}</p>
+          </div>
+        )}
 
         <div className="form-group">
           <label htmlFor="year">Year</label>
@@ -88,6 +123,11 @@ function AddVehicle() {
             className="form-input"
           />
         </div>
+        {errors && (
+          <div className="error">
+            <p>{errors.year}</p>
+          </div>
+        )}
 
         <div className="form-group">
           <label htmlFor="registration">Registration</label>
@@ -101,6 +141,11 @@ function AddVehicle() {
             className="form-input"
           />
         </div>
+        {errors && (
+          <div className="error">
+            <p>{errors.registration}</p>
+          </div>
+        )}
 
         <div className="form-group">
           <label htmlFor="color">Color</label>
@@ -110,16 +155,20 @@ function AddVehicle() {
             name="color"
             value={FormData.color}
             onChange={handleChange}
-            className="form-input"
-          >
+            className="form-input">
             <option value="default">Choose Color</option>
             {colors.map((color) => (
               <option key={color.id} value={color}>
                 {color}
               </option>
             ))}
-            </select>
+          </select>
         </div>
+        {errors && (
+          <div className="error">
+            <p>{errors.color}</p>
+          </div>
+        )}
 
         <div className="form-group">
           <label htmlFor="category">Category</label>
@@ -138,6 +187,11 @@ function AddVehicle() {
             ))}
           </select>
         </div>
+        {errors && (
+          <div className="error">
+            <p>{errors.category}</p>
+          </div>
+        )}
 
         <div className="form-group">
           <label htmlFor="engine">Engine</label>
@@ -147,8 +201,7 @@ function AddVehicle() {
             name="engine"
             value={FormData.engine}
             onChange={handleChange}
-            className="form-input"
-          >
+            className="form-input">
             <option value="default">Choose engine</option>
             {engines.map((engine) => (
               <option key={engine.id} value={engine}>
@@ -157,19 +210,29 @@ function AddVehicle() {
             ))}
           </select>
         </div>
+        {errors && (
+          <div className="error">
+            <p>{errors.engine}</p>
+          </div>
+        )}
 
         <div className="form-group">
-          <label htmlFor="kilometers">Kilometers</label>
+          <label htmlFor="lastKilometers">Kilometers</label>
           <input
-            id="kilometers"
+            id="lastKilometers"
             type="number"
-            name="kilometers"
+            name="lastKilometers"
             placeholder="Kilometers"
-            value={FormData.kilometers}
+            value={FormData.lastKilometers}
             onChange={handleChange}
             className="form-input"
           />
         </div>
+        {errors && (
+          <div className="error">
+            <p>{errors.lastKilometers}</p>
+          </div>
+        )}
 
         <div className="form-group">
           <label htmlFor="description">Description</label>
@@ -183,6 +246,11 @@ function AddVehicle() {
             className="form-input"
           />
         </div>
+        {errors && (
+          <div className="error">
+            <p>{errors.description}</p>
+          </div>
+        )}
 
         <button className="btn-login">Add</button>
       </form>
