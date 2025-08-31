@@ -1,13 +1,23 @@
 import { useState } from "react";
 import "../css/AddEventForm.css";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function AddEventForm() {
+
+  const navigate = useNavigate();
+  const [errors, setErrors] = useState("");
+
+  const { id } = useParams();
+  console.log(id);
+  
+
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     kilometers: "",
-    startDate: "",
-    endDate: "",
+    startDate: null,
+    endDate: null,
   });
 
   const handleChange = (e) => {
@@ -18,15 +28,43 @@ function AddEventForm() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleAddEvent = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("accessToken");
     console.log(formData);
-  };
+    
+
+    
+    try {
+      const response = await fetch(`http://localhost:8080/vehicles/${id}/events`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.status === 201) {
+        const data = await response.json();
+        
+        navigate(`/vehicles/${id}`);
+      } else {
+        const data = await response.json().catch(() => ({}));
+        setErrors(data);
+      }
+    } catch(err) {
+      console.log(err.message);
+      
+    }
+
+
+  }
 
   return (
     <div className="event-form-container">
       <h3>Add Event</h3>
-      <form onSubmit={handleSubmit} className="event-form">
+      <form onSubmit={handleAddEvent} className="event-form">
         <label htmlFor="name">Name:</label>
         <input
           id="name"
@@ -37,6 +75,11 @@ function AddEventForm() {
           onChange={handleChange}
           className="form-input"
         />
+        {errors && (
+          <div className="error">
+            <p>{errors.name}</p>
+          </div>
+        )}
         <label htmlFor="description">Description:</label>
         <textarea
           id="description"
@@ -47,6 +90,11 @@ function AddEventForm() {
           onChange={handleChange}
           className="form-input"
         />
+        {errors && (
+          <div className="error">
+            <p>{errors.description}</p>
+          </div>
+        )}
         <label htmlFor="kilometers">Kilometers:</label>
         <input
           id="kilometes"
@@ -57,6 +105,11 @@ function AddEventForm() {
           onChange={handleChange}
           className="form-input"
         />
+        {errors && (
+          <div className="error">
+            <p>{errors.kilometers}</p>
+          </div>
+        )}
         <label htmlFor="startDate">Start date:</label>
         <input
           id="startDate"
@@ -67,6 +120,11 @@ function AddEventForm() {
           onChange={handleChange}
           className="form-input"
         />
+        {errors && (
+          <div className="error">
+            <p>{errors.startDate}</p>
+          </div>
+        )}
         <label htmlFor="endDate">End date:</label>
         <input
           id="endDate"
@@ -77,8 +135,13 @@ function AddEventForm() {
           onChange={handleChange}
           className="form-input"
         />
+        {errors && (
+          <div className="error">
+            <p>{errors.endDate}</p>
+          </div>
+        )}
         <button type="submit" className="btn-submit">
-          Submit
+          Add Event
         </button>
       </form>
     </div>

@@ -12,11 +12,11 @@ width: 50%;
 .event-form label {
     margin-left: 25px;
     margin-bottom: 5px;
+    margin-top: 15px;
 }
 
 .form-input {
     margin-left: 20px;
-    margin-bottom: 20px;
     flex-grow: 1;
     height: 2rem;
     display: flex;
@@ -33,5 +33,11 @@ width: 50%;
     border-radius: 7px;
     border: green solid 2px;
     align-self: center;
-    margin-bottom: 25px;
+    margin: 25px;
+}
+
+.error {
+    text-align: right;
+    margin: 0px;
+    padding: 0px;
 }

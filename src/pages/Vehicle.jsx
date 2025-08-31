@@ -25,6 +25,8 @@ const events = [
   },
 ];
 
+
+
 function Vehicle() {
   const [addEventClicked, setAddEventClicked] = useState(false);
 

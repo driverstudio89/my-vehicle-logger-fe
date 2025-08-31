@@ -82,7 +82,7 @@ function AddVehicle() {
             type="text"
             name="make"
             placeholder="Make"
-            value={FormData.make}
+            value={formData.make}
             onChange={handleChange}
             className="form-input"
           />
@@ -100,7 +100,7 @@ function AddVehicle() {
             type="text"
             name="model"
             placeholder="Model"
-            value={FormData.model}
+            value={formData.model}
             onChange={handleChange}
             className="form-input"
           />
@@ -118,7 +118,7 @@ function AddVehicle() {
             type="number"
             name="year"
             placeholder="Year"
-            value={FormData.year}
+            value={formData.year}
             onChange={handleChange}
             className="form-input"
           />
@@ -136,7 +136,7 @@ function AddVehicle() {
             type="text"
             name="registration"
             placeholder="Registration"
-            value={FormData.registration}
+            value={formData.registration}
             onChange={handleChange}
             className="form-input"
           />
@@ -153,7 +153,7 @@ function AddVehicle() {
             id="color"
             type="text"
             name="color"
-            value={FormData.color}
+            value={formData.color}
             onChange={handleChange}
             className="form-input">
             <option value="default">Choose Color</option>
@@ -176,7 +176,7 @@ function AddVehicle() {
             id="category"
             type="text"
             name="category"
-            value={FormData.category}
+            value={formData.category}
             onChange={handleChange}
             className="form-input">
             <option value="default">Choose category</option>
@@ -199,7 +199,7 @@ function AddVehicle() {
             id="engine"
             type="text"
             name="engine"
-            value={FormData.engine}
+            value={formData.engine}
             onChange={handleChange}
             className="form-input">
             <option value="default">Choose engine</option>
@@ -223,7 +223,7 @@ function AddVehicle() {
             type="number"
             name="lastKilometers"
             placeholder="Kilometers"
-            value={FormData.lastKilometers}
+            value={formData.lastKilometers}
             onChange={handleChange}
             className="form-input"
           />
@@ -241,7 +241,7 @@ function AddVehicle() {
             type="text"
             name="description"
             placeholder="Description"
-            value={FormData.description}
+            value={formData.description}
             onChange={handleChange}
             className="form-input"
           />
