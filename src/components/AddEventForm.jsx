@@ -3,7 +3,7 @@ import "../css/AddEventForm.css";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-function AddEventForm() {
+function AddEventForm(props) {
 
   const navigate = useNavigate();
   const [errors, setErrors] = useState("");
@@ -47,7 +47,7 @@ function AddEventForm() {
 
       if (response.status === 201) {
         const data = await response.json();
-        
+        props.setAddEventClicked(prev => !prev);
         navigate(`/vehicles/${id}`);
       } else {
         const data = await response.json().catch(() => ({}));

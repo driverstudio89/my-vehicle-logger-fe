@@ -87,7 +87,7 @@ function Vehicle() {
         Add Event
       </button>
       {addEventClicked ? (
-        <AddEventForm />
+        <AddEventForm setAddEventClicked={setAddEventClicked} />
       ) : (
         events.map((event) => <Event event={event} key={event.id} />)
       )}
