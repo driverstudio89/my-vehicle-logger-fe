@@ -16,26 +16,28 @@
 .vehicle-info-container {
     display: flex;
     flex-direction: row;
-    gap: 150px;
+    gap: 100px;
     padding: 25px 25px;
     align-self: center;
 }
 
-
 .vehicle-image {
-
     flex: 1;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .vehicle-image img {
+    margin: 20px;
     width: 350px;
-    object-fit: fill;
+    object-fit: cover;
     border-radius: 10px;
 }
 
 .vehicle-page-info {
     flex: 1;
-
     padding: 10px;
     display: flex;
     flex-direction: column;

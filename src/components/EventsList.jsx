@@ -3,9 +3,7 @@ import Event from "../components/Event";
 import { getEvents } from "../services/api";
 import "../css/EventsList.css"
 
-function EventsList(props) {
-    console.log(props.id);
-    
+function EventsList(props) {    
 
     const [events, setEvents] = useState([]);
 

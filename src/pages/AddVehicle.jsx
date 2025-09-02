@@ -10,7 +10,7 @@ function AddVehicle() {
     make: "ford",
     model: "focus",
     year: "2012",
-    registration: "cc1246cc",
+    registration: "cc1001cc",
     color: "BLUE",
     category: "CAR",
     engine: "DIESEL",
@@ -23,17 +23,24 @@ function AddVehicle() {
   const [engines, setEngine] = useState([]);
   const [errors, setErrors] = useState("");
 
+  const [image, setImage] = useState(null);
+
   const handleAddVehicle = async (e) => {
     e.preventDefault();
+    
     const token = localStorage.getItem("accessToken");
+    const data = new FormData();
+    
+    data.append("addVehicleRequest", new Blob([JSON.stringify(formData)], { type: "application/json" }));
+    data.append("image", image);
     try {
+      console.log(formData);
       const response = await fetch("http://localhost:8080/vehicles", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(formData),
+        body: data,
       });
 
       if (response.status === 201) {
@@ -71,10 +78,28 @@ function AddVehicle() {
     getOptions();
   }, []);
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+    }
+  };
+
   return (
     <div className="add-vehicle">
       <h3>Add Vehicle</h3>
       <form onSubmit={handleAddVehicle} className="add-vehicle-form">
+        <div className="form-group">
+        <label htmlFor="image">Image</label>
+            <input
+              id="image"
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
+        </div>
+
         <div className="form-group">
           <label htmlFor="make">Make</label>
           <input

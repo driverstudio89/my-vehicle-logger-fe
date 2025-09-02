@@ -17,7 +17,8 @@
 
 .vehicle-thumbnail img {
     width: 200px;
-    object-fit: fill;
+    height: 200px;
+    object-fit: cover;
 }
 
 .vehicle-card-info {

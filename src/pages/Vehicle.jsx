@@ -1,16 +1,14 @@
 import "../css/Vehicle.css";
 import { useEffect, useState } from "react";
 import AddEventForm from "../components/AddEventForm";
-import { getVehicle, } from "../services/api";
+import { getVehicle } from "../services/api";
 import { useParams } from "react-router-dom";
 import EventsList from "../components/EventsList";
-
 
 function Vehicle() {
   const [addEventClicked, setAddEventClicked] = useState(false);
 
   const { id } = useParams();
-  
 
   const addEventClickHandler = (e) => {
     setAddEventClicked(true);
@@ -32,22 +30,28 @@ function Vehicle() {
     const loadVehicle = async () => {
       try {
         const myVehicle = await getVehicle(id);
+        console.log(myVehicle);
+
         setVehicle(myVehicle);
-      } catch(err) {
+      } catch (err) {
         console.log(err);
       }
-    }
+    };
     loadVehicle();
   }, []);
-  
+
   return (
     <div className="vehicle">
       <h3>Vehicle info</h3>
       <div className="vehicle-info-container">
         <div className="vehicle-image">
           <img
-            src="https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE="
+            src={"http://localhost:8080/images/" + vehicle.image}
             alt={vehicle.make}
+            onError={(e) => {
+              e.target.src =
+                "https://www.fogtechnologies.in/assets/img/no_blog.jpg";
+            }}
           />
         </div>
         <div className="vehicle-page-info">
@@ -67,7 +71,7 @@ function Vehicle() {
       {addEventClicked ? (
         <AddEventForm setAddEventClicked={setAddEventClicked} />
       ) : (
-        <EventsList id={id}/>
+        <EventsList id={id} />
       )}
     </div>
   );
