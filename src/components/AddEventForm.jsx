@@ -9,15 +9,13 @@ function AddEventForm(props) {
   const [errors, setErrors] = useState("");
 
   const { id } = useParams();
-  console.log(id);
-  
 
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     kilometers: "",
-    startDate: null,
-    endDate: null,
+    startDate: Date.now,
+    endDate: Date.now,
   });
 
   const handleChange = (e) => {

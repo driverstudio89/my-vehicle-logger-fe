@@ -1,15 +1,16 @@
 import "../css/Vehicle.css";
 import { useEffect, useState } from "react";
 import AddEventForm from "../components/AddEventForm";
-import Event from "../components/Event";
-import { getVehicle, getEvents } from "../services/api";
+import { getVehicle, } from "../services/api";
 import { useParams } from "react-router-dom";
+import EventsList from "../components/EventsList";
+
 
 function Vehicle() {
   const [addEventClicked, setAddEventClicked] = useState(false);
-  const [events, setEvents] = useState([]);
 
   const { id } = useParams();
+  
 
   const addEventClickHandler = (e) => {
     setAddEventClicked(true);
@@ -26,19 +27,6 @@ function Vehicle() {
     engine: "",
     created: "",
   });
-
-  useEffect(() => {
-    const loadEvents = async () => {
-      try {
-        const myEvents = await getEvents(id)
-        setEvents(myEvents);
-      } catch(err) {
-        console.log(err);
-      }
-    }
-    loadEvents();
-  }, []);
-  
 
   useEffect(() => {
     const loadVehicle = async () => {
@@ -79,7 +67,7 @@ function Vehicle() {
       {addEventClicked ? (
         <AddEventForm setAddEventClicked={setAddEventClicked} />
       ) : (
-        events.map((event) => <Event event={event} key={event.id} />)
+        <EventsList id={id}/>
       )}
     </div>
   );
