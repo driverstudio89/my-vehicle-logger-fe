@@ -1,5 +1,6 @@
 import "../css/VehicleCard.css";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function VehicleCard({ vehicle }) {
   const navigate = useNavigate();
@@ -11,14 +12,14 @@ function VehicleCard({ vehicle }) {
   return (
     <div className="vehicle-card" onClick={handleClick}>
       <div className="vehicle-thumbnail">
-        <img
-          src={"http://localhost:8080/images/" + vehicle.image}
-          alt={vehicle.make}
-          onError={(e) => {
-            e.target.src =
-              "https://www.fogtechnologies.in/assets/img/no_blog.jpg";
-          }}
-        />
+        {vehicle.image ? (
+          <img src={vehicle.image} alt={vehicle.make} />
+        ) : (
+          <img
+            src={"https://www.fogtechnologies.in/assets/img/no_blog.jpg"}
+            alt={vehicle.make}
+          />
+        )}
       </div>
       <div className="vehicle-card-info">
         <h3>{vehicle.make}</h3>

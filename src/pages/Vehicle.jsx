@@ -45,14 +45,14 @@ function Vehicle() {
       <h3>Vehicle info</h3>
       <div className="vehicle-info-container">
         <div className="vehicle-image">
-          <img
-            src={"http://localhost:8080/images/" + vehicle.image}
-            alt={vehicle.make}
-            onError={(e) => {
-              e.target.src =
-                "https://www.fogtechnologies.in/assets/img/no_blog.jpg";
-            }}
-          />
+          {vehicle.image ? (
+            <img src={vehicle.image} alt={vehicle.make} />
+          ) : (
+            <img
+              src={"https://www.fogtechnologies.in/assets/img/no_blog.jpg"}
+              alt={vehicle.make}
+            />
+          )}
         </div>
         <div className="vehicle-page-info">
           <h3>{vehicle.make}</h3>
