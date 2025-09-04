@@ -30,7 +30,6 @@ function Vehicle() {
     const loadVehicle = async () => {
       try {
         const myVehicle = await getVehicle(id);
-        console.log(myVehicle);
 
         setVehicle(myVehicle);
       } catch (err) {

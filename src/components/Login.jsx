@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../css/Login.css";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext.jsx";
+import { login } from "../services/api.js"
 
 function Login() {
   const authContext = useAuthContext();
@@ -15,13 +16,8 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8080/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await login(email, password);
+      
       const data = await response.json().catch(() => ({}));
       if (!!response.ok) {
         authContext.login(data.token);
