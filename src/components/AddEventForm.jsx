@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../css/AddEventForm.css";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { apiRequest } from "../services/api";
 
 function AddEventForm(props) {
 
@@ -34,11 +35,10 @@ function AddEventForm(props) {
 
     
     try {
-      const response = await fetch(`http://localhost:8080/vehicles/${id}/events`, {
+      const response = await apiRequest(`/vehicles/${id}/events`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formData),
       });

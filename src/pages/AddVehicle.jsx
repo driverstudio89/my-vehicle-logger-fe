@@ -33,12 +33,11 @@ function AddVehicle() {
     
     data.append("addVehicleRequest", new Blob([JSON.stringify(formData)], { type: "application/json" }));
     data.append("image", image);
-    try {
-      console.log(formData);
-      const response = await fetch("http://localhost:8080/vehicles", {
+    try {     
+
+      const response = await apiRequest("/vehicles", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`,
         },
         body: data,
       });

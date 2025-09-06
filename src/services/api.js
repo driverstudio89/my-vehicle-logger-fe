@@ -23,26 +23,40 @@ export const refreshAccessToken = async () => {
   });
 
   if (!response.ok) {
-    throw new Error ("Refresh failed");
+    throw new Error("Refresh failed");
   }
   localStorage.setItem("accessToken", accessToken);
-}
+};
 
-export const apiRequest = async (url, { method = "GET", body, headers = {} } = {}) => {
+export const apiRequest = async (
+  url,
+  { method = "GET", body, headers = {} } = {}
+) => {
   const token = localStorage.getItem("accessToken");
 
   console.log(url, method, body, headers);
-  
+
   const doRequest = async () => {
-    return fetch(`${API_BASE_URL}${url}`, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-        ...headers,
-      },
-      ...(body ? { body: JSON.stringify(body) } : {}),
-    });
+    if (method === "GET") {
+      return fetch(`${API_BASE_URL}${url}`, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          ...headers,
+        },
+        ...(body ? { body: JSON.stringify(body) } : {}),
+      });
+    } else {
+      return fetch(`${API_BASE_URL}${url}`, {
+        method,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          ...headers,
+        },
+        ...(body ? { body: body } : {}),
+      });
+    }
   };
 
   let response = await doRequest();
@@ -66,8 +80,12 @@ export const apiRequest = async (url, { method = "GET", body, headers = {} } = {
     throw new Error(message);
   }
 
-  const data = await response.json();
-  return data;
+  if (method === "GET") {
+    const data = await response.json();
+    return data;
+  } else {
+    return response;
+  }
 };
 
 // export const getVehicles = async () => {
