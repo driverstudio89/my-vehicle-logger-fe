@@ -15,7 +15,7 @@ function Home() {
         setVehicles(myVehicles)
       } catch(err) {
         setError("Failed to load vehicles");
-        console.log(error);
+        console.log(err);
       }
     };
     loadVehicles();

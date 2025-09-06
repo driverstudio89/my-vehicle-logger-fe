@@ -33,8 +33,7 @@ function AddVehicle() {
     
     data.append("addVehicleRequest", new Blob([JSON.stringify(formData)], { type: "application/json" }));
     data.append("image", image);
-    try {     
-
+    try {          
       const response = await apiRequest("/vehicles", {
         method: "POST",
         headers: {
@@ -180,7 +179,7 @@ function AddVehicle() {
             value={formData.color}
             onChange={handleChange}
             className="form-input">
-            <option value="default">Choose Color</option>
+            <option key="color" value="default">Choose Color</option>
             {colors.map((color) => (
               <option key={color.id} value={color}>
                 {color}
@@ -203,7 +202,7 @@ function AddVehicle() {
             value={formData.category}
             onChange={handleChange}
             className="form-input">
-            <option value="default">Choose category</option>
+            <option key="category" value="default">Choose category</option>
             {categories.map((category) => (
               <option key={category.id} value={category}>
                 {category}
@@ -226,7 +225,7 @@ function AddVehicle() {
             value={formData.engine}
             onChange={handleChange}
             className="form-input">
-            <option value="default">Choose engine</option>
+            <option key="engine" value="default">Choose engine</option>
             {engines.map((engine) => (
               <option key={engine.id} value={engine}>
                 {engine}

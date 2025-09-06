@@ -1,6 +1,5 @@
-import { useAuthContext } from "../context/AuthContext.jsx";
+import { useAuthContext } from "../context/AuthContext";
 
-const authContext = useAuthContext;
 const API_BASE_URL = "http://localhost:8080";
 
 export const login = async (email, password) => {
@@ -9,6 +8,7 @@ export const login = async (email, password) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
 
     body: JSON.stringify({ email, password }),
   });
@@ -19,24 +19,24 @@ export const login = async (email, password) => {
 export const refreshAccessToken = async () => {
   const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
     method: "POST",
-    credentials: include,
+    credentials: "include",
   });
 
   if (!response.ok) {
     throw new Error("Refresh failed");
   }
-  localStorage.setItem("accessToken", accessToken);
+  const data = await response.json();
+  const token = data.token;
+  localStorage.setItem("accessToken", token);
+
+  return token;
 };
 
-export const apiRequest = async (
-  url,
-  { method = "GET", body, headers = {} } = {}
-) => {
-  const token = localStorage.getItem("accessToken");
-
-  console.log(url, method, body, headers);
+export const apiRequest = async (url,{ method = "GET", body, headers = {} } = {}) => {
 
   const doRequest = async () => {
+    const token = localStorage.getItem("accessToken");
+    
     if (method === "GET") {
       return fetch(`${API_BASE_URL}${url}`, {
         method,
@@ -62,10 +62,12 @@ export const apiRequest = async (
   let response = await doRequest();
 
   if (response.status === 401) {
-    try {
-      token = await refreshAccessToken();
+    try {     
+      await refreshAccessToken();
       response = await doRequest();
     } catch (err) {
+      console.log(err);
+      const authContext = useAuthContext();
       authContext.logout();
       throw new Error("Session expired. Please log again.");
     }
