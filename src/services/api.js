@@ -41,7 +41,6 @@ export const apiRequest = async (url, { method = "GET", body, headers = {} } = {
         Authorization: `Bearer ${token}`,
         ...headers,
       },
-      credentials: "include",
       ...(body ? { body: JSON.stringify(body) } : {}),
     });
   };
@@ -71,68 +70,68 @@ export const apiRequest = async (url, { method = "GET", body, headers = {} } = {
   return data;
 };
 
-export const getVehicles = async () => {
-  const token = localStorage.getItem("accessToken");
+// export const getVehicles = async () => {
+//   const token = localStorage.getItem("accessToken");
 
-  const response = await fetch("http://localhost:8080/vehicles", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+//   const response = await fetch("http://localhost:8080/vehicles", {
+//     method: "GET",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   });
 
-  const data = await response.json();
-  return data;
-};
+//   const data = await response.json();
+//   return data;
+// };
 
-export const getVehicle = async (id) => {
-  const token = localStorage.getItem("accessToken");
+// export const getVehicle = async (id) => {
+//   const token = localStorage.getItem("accessToken");
 
-  const response = await fetch(`http://localhost:8080/vehicles/${id}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+//   const response = await fetch(`http://localhost:8080/vehicles/${id}`, {
+//     method: "GET",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   });
 
-  if (response.status === 401) {
-    try {
-      token = await refreshAccessToken();
-      response = await doRequest();
-    } catch (err) {
-      authContext.logout();
-      throw new Error("Session expired. Please log again.");
-    }
-  }
+//   if (response.status === 401) {
+//     try {
+//       token = await refreshAccessToken();
+//       response = await doRequest();
+//     } catch (err) {
+//       authContext.logout();
+//       throw new Error("Session expired. Please log again.");
+//     }
+//   }
 
-  const data = await response.json();
-  return data;
-};
+//   const data = await response.json();
+//   return data;
+// };
 
-export const getEvents = async (id) => {
-  const token = localStorage.getItem("accessToken");
+// export const getEvents = async (id) => {
+//   const token = localStorage.getItem("accessToken");
 
-  const response = await fetch(`http://localhost:8080/vehicles/${id}/events`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+//   const response = await fetch(`http://localhost:8080/vehicles/${id}/events`, {
+//     method: "GET",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   });
 
-  const data = await response.json();
-  return data;
-};
+//   const data = await response.json();
+//   return data;
+// };
 
-export const VehicleOptionsFromApi = async () => {
-  const token = localStorage.getItem("accessToken");
+// export const VehicleOptionsFromApi = async () => {
+//   const token = localStorage.getItem("accessToken");
 
-  const response = await fetch("http://localhost:8080/vehicles/options", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+//   const response = await fetch("http://localhost:8080/vehicles/options", {
+//     method: "GET",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   });
 
-  const data = await response.json();
-  return data;
-};
+//   const data = await response.json();
+//   return data;
+// };

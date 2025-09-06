@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react"
 import Event from "../components/Event";
-import { getEvents } from "../services/api";
+import { apiRequest } from "../services/api";
 import "../css/EventsList.css"
 
 function EventsList(props) {    
@@ -10,7 +10,7 @@ function EventsList(props) {
     useEffect(() => {
         const loadEvents = async () => {
           try {
-            const myEvents = await getEvents(props.id)
+            const myEvents = await apiRequest(`/vehicles/${props.id}/events`)
             setEvents(myEvents);
           } catch(err) {
             console.log(err);

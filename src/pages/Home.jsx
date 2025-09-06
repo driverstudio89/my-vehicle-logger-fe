@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import VehicleCard from "../components/VehicleCard";
 import "../css/Home.css"
 import { useState } from "react";
-import { getVehicles } from "../services/api.js"
+import { apiRequest } from "../services/api.js"
 
 function Home() {
   const [vehicles, setVehicles] = useState([]);
@@ -11,7 +11,7 @@ function Home() {
   useEffect(() => {
     const loadVehicles = async () => {
       try {
-        const myVehicles = await getVehicles();
+        const myVehicles = await apiRequest("/vehicles");
         setVehicles(myVehicles)
       } catch(err) {
         setError("Failed to load vehicles");

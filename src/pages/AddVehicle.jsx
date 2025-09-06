@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../css/AddVehicle.css";
-import { VehicleOptionsFromApi } from "../services/api";
+import { apiRequest } from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 function AddVehicle() {
@@ -67,7 +67,7 @@ function AddVehicle() {
   useEffect(() => {
     const getOptions = async () => {
       try {
-        const dataOptions = await VehicleOptionsFromApi();
+        const dataOptions = await apiRequest("/vehicles/options");
         setColor(dataOptions.colors);
         setCategory(dataOptions.categories);
         setEngine(dataOptions.engines);

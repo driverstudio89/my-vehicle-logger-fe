@@ -1,7 +1,7 @@
 import "../css/Vehicle.css";
 import { useEffect, useState } from "react";
 import AddEventForm from "../components/AddEventForm";
-import { getVehicle } from "../services/api";
+import { apiRequest } from "../services/api";
 import { useParams } from "react-router-dom";
 import EventsList from "../components/EventsList";
 
@@ -29,7 +29,7 @@ function Vehicle() {
   useEffect(() => {
     const loadVehicle = async () => {
       try {
-        const myVehicle = await getVehicle(id);
+        const myVehicle = await apiRequest(`/vehicles/${id}`);
 
         setVehicle(myVehicle);
       } catch (err) {
