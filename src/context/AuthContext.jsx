@@ -8,10 +8,16 @@ export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
+
     useEffect(() => {
-        setIsAuthenticated(!!localStorage.getItem("accessToken"));
+        const token = (!!localStorage.getItem("accessToken"));
+        if (token) {
+            setIsAuthenticated(true);
+        }
+        setIsLoading(false);
     },[])
 
     const login = (accessToken) => {
@@ -26,12 +32,12 @@ export const AuthProvider = ({ children }) => {
             method: "POST",
         });
         localStorage.removeItem("accessToken");
-        setIsAuthenticated(false);        
+        setIsAuthenticated(false);     
         navigate("/profile")
         
     };
 
-    return <AuthContext.Provider value={ {isAuthenticated, login, logout} }>
+    return <AuthContext.Provider value={ {isAuthenticated, login, logout, isLoading} }>
         { children }
     </AuthContext.Provider>
 

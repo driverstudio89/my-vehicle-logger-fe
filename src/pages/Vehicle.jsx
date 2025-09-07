@@ -31,10 +31,15 @@ function Vehicle() {
   });
 
   useEffect(() => {
-    const loadVehicle = async () => {
+
+    if (!authContext.isLoading) {
       if (!authContext.isAuthenticated) {
         navigate("/profile")
       }
+    }
+
+    const loadVehicle = async () => {
+
       try {
         const myVehicle = await apiRequest(`/vehicles/${id}`);
 

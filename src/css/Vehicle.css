@@ -22,7 +22,7 @@
 }
 
 .vehicle-image {
-    flex: 1;
+    flex: 7;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -37,7 +37,7 @@
 }
 
 .vehicle-page-info {
-    flex: 1;
+    flex: 3;
     padding: 10px;
     display: flex;
     flex-direction: column;

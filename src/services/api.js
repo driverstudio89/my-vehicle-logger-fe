@@ -63,12 +63,14 @@ export const apiRequest = async (url,{ method = "GET", body, headers = {} } = {}
   let response = await doRequest();
 
   if (response.status === 401) {
+    const authContext = useAuthContext();  
     try {     
-      await refreshAccessToken();
-      response = await doRequest();
+      if (authContext.isAuthenticated) {
+        await refreshAccessToken();
+        response = await doRequest();
+      }
     } catch (err) {
       console.log(err);
-      const authContext = useAuthContext();
       authContext.logout();
       throw new Error("Session expired. Please log again.");
     }

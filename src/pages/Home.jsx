@@ -10,13 +10,15 @@ import { useNavigate } from "react-router-dom";
 function Home() {
   const [vehicles, setVehicles] = useState([]);
   const [error, setError] = useState(null);
-  const authContext = useAuthContext();
   const navigate = useNavigate();
+  const authContext = useAuthContext();
 
   useEffect(() => {
-    
-    if (!authContext.isAuthenticated) {
-      navigate("/profile")
+
+    if (!authContext.isLoading) {
+      if (!authContext.isAuthenticated) {
+        navigate("/profile")
+      }
     }
     
     const loadVehicles = async () => {
