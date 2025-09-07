@@ -1,11 +1,19 @@
-import Login from "../components/Login"
+import Login from "../components/Login";
+import User from "../components/User"
+import { useAuthContext } from "../context/AuthContext";
 
 function Profile() {
-    return (
-        <div className="profile">
-            <Login />
-        </div>
-    )
+  const authContext = useAuthContext();
+  
+  return (
+    <div>
+      {authContext.isAuthenticated ? (
+        <div className="profile"><User /></div>
+      ) : (
+        <div className="profile"><Login /></div>
+      )}
+    </div>
+  );
 }
 
-export default Profile
+export default Profile;
