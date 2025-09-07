@@ -2,7 +2,7 @@ import "../css/Vehicle.css";
 import { useEffect, useState } from "react";
 import AddEventForm from "../components/AddEventForm";
 import { apiRequest } from "../services/api";
-import { useParams } from "react-router-dom";
+import { Route, useParams } from "react-router-dom";
 import EventsList from "../components/EventsList";
 import { useAuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -54,10 +54,13 @@ function Vehicle() {
   }, []);
 
   const handleEditVehicle = () => {
+    navigate("/update-vehicle", {
+      state: {vehicle}
+    });
     
-  }
+  };
 
-  const handleDeleteVehicle = async (e) => {
+  const handleDeleteVehicle = async () => {
 
     try {
       const response = await apiRequest(`/vehicles/${id}`, {
