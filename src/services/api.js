@@ -73,15 +73,6 @@ export const apiRequest = async (url,{ method = "GET", body, headers = {} } = {}
     }
   }
 
-  if (!response.ok) {
-    let message = `API error: ${response.status}`;
-    try {
-      const errorData = await response.json();
-      message = errorData.message || message;
-    } catch {}
-    throw new Error(message);
-  }
-
   if (method === "GET") {
     const data = await response.json();
     return data;
@@ -89,69 +80,3 @@ export const apiRequest = async (url,{ method = "GET", body, headers = {} } = {}
     return response;
   }
 };
-
-// export const getVehicles = async () => {
-//   const token = localStorage.getItem("accessToken");
-
-//   const response = await fetch("http://localhost:8080/vehicles", {
-//     method: "GET",
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   });
-
-//   const data = await response.json();
-//   return data;
-// };
-
-// export const getVehicle = async (id) => {
-//   const token = localStorage.getItem("accessToken");
-
-//   const response = await fetch(`http://localhost:8080/vehicles/${id}`, {
-//     method: "GET",
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   });
-
-//   if (response.status === 401) {
-//     try {
-//       token = await refreshAccessToken();
-//       response = await doRequest();
-//     } catch (err) {
-//       authContext.logout();
-//       throw new Error("Session expired. Please log again.");
-//     }
-//   }
-
-//   const data = await response.json();
-//   return data;
-// };
-
-// export const getEvents = async (id) => {
-//   const token = localStorage.getItem("accessToken");
-
-//   const response = await fetch(`http://localhost:8080/vehicles/${id}/events`, {
-//     method: "GET",
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   });
-
-//   const data = await response.json();
-//   return data;
-// };
-
-// export const VehicleOptionsFromApi = async () => {
-//   const token = localStorage.getItem("accessToken");
-
-//   const response = await fetch("http://localhost:8080/vehicles/options", {
-//     method: "GET",
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   });
-
-//   const data = await response.json();
-//   return data;
-// };

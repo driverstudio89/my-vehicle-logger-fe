@@ -28,7 +28,6 @@ function AddVehicle() {
   const handleAddVehicle = async (e) => {
     e.preventDefault();
     
-    const token = localStorage.getItem("accessToken");
     const data = new FormData();
     
     data.append("addVehicleRequest", new Blob([JSON.stringify(formData)], { type: "application/json" }));

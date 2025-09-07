@@ -3,6 +3,7 @@ import "../css/Login.css";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext.jsx";
 import { login } from "../services/api.js"
+import { Link } from "react-router-dom"
 
 function Login() {
   const authContext = useAuthContext();
@@ -66,6 +67,8 @@ function Login() {
         </div>}
 
         <button className="btn-login">Login</button>
+
+        <p>Don't have account: <Link to="/register" className="register-link">Register</Link></p>
       </form>
     </div>
   );

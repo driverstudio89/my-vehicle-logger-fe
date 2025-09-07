@@ -26,7 +26,11 @@ function Navbar() {
                 <Link to="/profile" className="nav-link">Profile</Link>
                 <div className="btn-logout" onClick={handleLogout}> Logout</div>
                 </>
-            ) : <Link to="/profile" className="nav-link">Login</Link>}
+            ) : <>
+            <Link to="/profile" className="nav-link">Login</Link>
+            <Link to="/register" className="nav-link">Register</Link>
+            </>
+            }
             <Link to="/about" className="nav-link">About</Link>
         </div>
     </nav>
