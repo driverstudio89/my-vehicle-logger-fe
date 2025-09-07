@@ -5,8 +5,6 @@ import { useAuthContext } from "../context/AuthContext";
 function Profile() {
   const authContext = useAuthContext();
   
-  console.log(authContext.isAuthenticated);
-  
   return (
     <div>
       {authContext.isAuthenticated ? (

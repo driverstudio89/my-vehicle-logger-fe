@@ -11,11 +11,11 @@ function AddVehicle() {
     model: "focus",
     year: "2012",
     registration: "cc1001cc",
-    color: "BLUE",
+    color: "RED",
     category: "CAR",
     engine: "DIESEL",
     lastKilometers: "344000",
-    description: "blue ford",
+    description: "red ford",
   });
 
   const [colors, setColor] = useState([]);

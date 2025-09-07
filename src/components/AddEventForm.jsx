@@ -29,11 +29,7 @@ function AddEventForm(props) {
 
   const handleAddEvent = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("accessToken");
-    console.log(formData);
-    
 
-    
     try {
       const response = await apiRequest(`/vehicles/${id}/events`, {
         method: "POST",

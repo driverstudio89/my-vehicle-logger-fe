@@ -1,6 +1,6 @@
 import "../css/VehicleCard.css";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import noImage from "../assets/no_image.jpg"
 
 function VehicleCard({ vehicle }) {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ function VehicleCard({ vehicle }) {
           <img src={vehicle.image} alt={vehicle.make} />
         ) : (
           <img
-            src={"https://www.fogtechnologies.in/assets/img/no_blog.jpg"}
+            src={noImage}
             alt={vehicle.make}
           />
         )}

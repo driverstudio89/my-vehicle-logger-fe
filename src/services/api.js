@@ -1,5 +1,3 @@
-import { useAuthContext } from "../context/AuthContext";
-
 const API_BASE_URL = "http://localhost:8080";
 
 export const login = async (email, password) => {
@@ -27,16 +25,19 @@ export const refreshAccessToken = async () => {
   }
   const data = await response.json();
   const token = data.token;
+
   localStorage.setItem("accessToken", token);
 
   return token;
 };
 
-export const apiRequest = async (url,{ method = "GET", body, headers = {} } = {}) => {
-
+export const apiRequest = async (
+  url,
+  { method = "GET", body, headers = {} } = {}
+) => {
   const doRequest = async () => {
     const token = localStorage.getItem("accessToken");
-    
+
     if (method === "GET") {
       return fetch(`${API_BASE_URL}${url}`, {
         method,
@@ -63,15 +64,11 @@ export const apiRequest = async (url,{ method = "GET", body, headers = {} } = {}
   let response = await doRequest();
 
   if (response.status === 401) {
-    const authContext = useAuthContext();  
-    try {     
-      if (authContext.isAuthenticated) {
-        await refreshAccessToken();
-        response = await doRequest();
-      }
+    try {
+      const token = await refreshAccessToken();
+      response = await doRequest();
     } catch (err) {
       console.log(err);
-      authContext.logout();
       throw new Error("Session expired. Please log again.");
     }
   }

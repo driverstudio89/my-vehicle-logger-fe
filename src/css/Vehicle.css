@@ -6,7 +6,16 @@
     background-color: #303436;
     border-radius: 10px;
     max-width: 80vw;
+    position: relative;
 
+}
+
+.buttons-group {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 7px;
 }
 
 .vehicle h3 {
@@ -69,4 +78,19 @@
     border: green solid 2px;
     align-self: center;
     margin: 25px;
+}
+
+.btn-edit, .btn-delete {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;   
+}
+
+.btn-edit {
+    filter: invert(1);
+}
+
+.btn-edit img, .btn-delete img{
+    width: 32px;
+    height: 32px;
 }
