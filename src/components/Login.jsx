@@ -62,6 +62,7 @@ function Login() {
         {errors && <div className="login-errors">
           <p>{errors.email}</p>
           <p>{errors.password}</p>
+          <p>{errors.error}</p>
         </div>}
 
         <button className="btn-login">Login</button>
