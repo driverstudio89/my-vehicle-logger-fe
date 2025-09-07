@@ -4,9 +4,13 @@ import AddEventForm from "../components/AddEventForm";
 import { apiRequest } from "../services/api";
 import { useParams } from "react-router-dom";
 import EventsList from "../components/EventsList";
+import { useAuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Vehicle() {
   const [addEventClicked, setAddEventClicked] = useState(false);
+  const authContext = useAuthContext();
+  const navigate = useNavigate();
 
   const { id } = useParams();
 
@@ -28,6 +32,9 @@ function Vehicle() {
 
   useEffect(() => {
     const loadVehicle = async () => {
+      if (!authContext.isAuthenticated) {
+        navigate("/profile")
+      }
       try {
         const myVehicle = await apiRequest(`/vehicles/${id}`);
 

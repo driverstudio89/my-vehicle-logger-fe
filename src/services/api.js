@@ -54,6 +54,7 @@ export const apiRequest = async (url,{ method = "GET", body, headers = {} } = {}
           Authorization: `Bearer ${token}`,
           ...headers,
         },
+        credentials: "include",
         ...(body ? { body: body } : {}),
       });
     }
