@@ -10,3 +10,21 @@
   gap: 1.5rem;
   padding: 2.5rem;
 }
+
+.empty-container {
+  width: 100%;
+  display: flex;
+  font-size: 28px;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-container h4 {
+  justify-content: center;
+}
+
+.add-link {
+  font-size: 30px;
+  text-decoration: none;
+  color: orange;
+}

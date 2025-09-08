@@ -1,27 +1,30 @@
-import {useState, useEffect} from "react"
+import { useState, useEffect } from "react";
 import Event from "../components/Event";
 import { apiRequest } from "../services/api";
-import "../css/EventsList.css"
+import "../css/EventsList.css";
 
-function EventsList(props) {    
+function EventsList({ id, onEditEvent }) {
+  const [events, setEvents] = useState([]);
 
-    const [events, setEvents] = useState([]);
+  useEffect(() => {
+    const loadEvents = async () => {
+      try {
+        const myEvents = await apiRequest(`/vehicles/${id}/events`);
+        setEvents(myEvents);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    loadEvents();
+  }, [id]);
 
-    useEffect(() => {
-        const loadEvents = async () => {
-          try {
-            const myEvents = await apiRequest(`/vehicles/${props.id}/events`)
-            setEvents(myEvents);
-          } catch(err) {
-            console.log(err);
-          }
-        }
-        loadEvents();
-      }, []);
-
-    return <div className="events-list-container">
-        {events.map((event) => <Event event={event} key={event.id} />)}
+  return (
+    <div className="events-list-container">
+      {events.map((event) => (
+        <Event event={event} key={event.id} onEditEvent={onEditEvent} />
+      ))}
     </div>
+  );
 }
 
-export default EventsList
+export default EventsList;

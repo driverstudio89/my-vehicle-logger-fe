@@ -1,8 +1,9 @@
 import "../css/Vehicle.css";
 import { useEffect, useState } from "react";
 import AddEventForm from "../components/AddEventForm";
+import UpdateEventForm from "../components/UpdateEventForm";
 import { apiRequest } from "../services/api";
-import {  useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import EventsList from "../components/EventsList";
 import { useAuthContext } from "../context/AuthContext";
 import noImage from "../assets/no_image.jpg";
@@ -11,6 +12,7 @@ import deleteIcon from "../assets/delete.png";
 
 function Vehicle() {
   const [addEventClicked, setAddEventClicked] = useState(false);
+  const [editingEvent, setEditingEvent] = useState(null);
   const authContext = useAuthContext();
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,6 +22,10 @@ function Vehicle() {
 
   const addEventClickHandler = (e) => {
     setAddEventClicked(true);
+  };
+
+  const handleEditEvent = (event) => {
+    setEditingEvent(event);
   };
 
   const [vehicle, setVehicle] = useState({
@@ -59,27 +65,33 @@ function Vehicle() {
 
   const handleEditVehicle = () => {
     navigate("/update-vehicle", {
-      state: {vehicle}
+      state: { vehicle },
     });
-    
   };
 
   const handleDeleteVehicle = async () => {
-
     try {
       const response = await apiRequest(`/vehicles/${id}`, {
         method: "DELETE",
       });
-        
+
       if (response.ok) {
-        navigate("/")
+        navigate("/");
       }
-      
-    } catch(err) {
+    } catch (err) {
       setErrors(err);
       console.log(err);
     }
-  }
+  };
+
+  const refreshVehicle = async () => {
+    try {
+      const myVehicle = await apiRequest(`/vehicles/${id}`);
+      setVehicle(myVehicle);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div>
@@ -87,52 +99,68 @@ function Vehicle() {
         <p>Loading...</p>
       ) : (
         <div className="vehicle">
-
-      {errors && <div className="login-errors">
-          <p>{errors.email}</p>
-          <p>{errors.password}</p>
-          <p>{errors.error}</p>
-        </div>}
-      
-      <h3>Vehicle info</h3>
-      <div className="buttons-group">
-        <button className="btn-edit" onClick={handleEditVehicle}>
-          <img src={editIcon} alt="edit" />
-        </button>
-        <button className="btn-delete" onClick={handleDeleteVehicle}>
-          <img src={deleteIcon} alt="delete" />
-        </button>
-      </div>
-      <div className="vehicle-info-container">
-        <div className="vehicle-image">
-          {vehicle.image ? (
-            <img src={vehicle.image} alt={vehicle.make} />
-          ) : (
-            <img src={noImage} alt={vehicle.make} />
+          {errors && (
+            <div className="login-errors">
+              <p>{errors.email}</p>
+              <p>{errors.password}</p>
+              <p>{errors.error}</p>
+            </div>
           )}
-          <p>{vehicle.description}</p>
+
+          <h3>Vehicle info</h3>
+          <div className="vehicle-buttons-group">
+            <button className="btn-edit" onClick={handleEditVehicle}>
+              <img src={editIcon} alt="edit" />
+            </button>
+            <button className="btn-delete" onClick={handleDeleteVehicle}>
+              <img src={deleteIcon} alt="delete" />
+            </button>
+          </div>
+          <div className="vehicle-info-container">
+            <div className="vehicle-image">
+              {vehicle.image ? (
+                <img src={vehicle.image} alt={vehicle.make} />
+              ) : (
+                <img src={noImage} alt={vehicle.make} />
+              )}
+              <p>{vehicle.description}</p>
+            </div>
+
+            <div className="vehicle-page-info">
+              <h3>Make: {vehicle.make}</h3>
+              <h3>Model: {vehicle.model}</h3>
+              <p>Registration: {vehicle.registration}</p>
+              <p>Kilometers: {vehicle.lastKilometers} km</p>
+              <p>Year: {vehicle.year}</p>
+              <p>Color: {vehicle.color}</p>
+              <p>Engine: {vehicle.engine}</p>
+              <p>Created: {vehicle.created}</p>
+            </div>
+          </div>
+
+          {addEventClicked ? (
+            <AddEventForm
+            setAddEventClicked={setAddEventClicked}
+            onCancel={() => setAddEventClicked(false)}
+             />
+          ) : editingEvent ? (
+            <UpdateEventForm
+              event={editingEvent}
+              onCancel={() => setEditingEvent(null)}
+              onSuccess={async () => {
+                setEditingEvent(null);
+                await refreshVehicle();
+              }}
+            />
+          ) : (
+            <div>
+              <button className="btn-add-event" onClick={addEventClickHandler}>
+                Add Event
+              </button>
+              <EventsList id={id} onEditEvent={handleEditEvent} />
+            </div>
+          )}
         </div>
-        
-        <div className="vehicle-page-info">
-          <h3>Make: {vehicle.make}</h3>
-          <h3>Model: {vehicle.model}</h3>
-          <p>Registration: {vehicle.registration}</p>
-          <p>Kilometers: {vehicle.lastKilometers} km</p>
-          <p>Year: {vehicle.year}</p>
-          <p>Color: {vehicle.color}</p>
-          <p>Engine: {vehicle.engine}</p>
-          <p>Created: {vehicle.created}</p>
-        </div>
-      </div>
-      <button className="btn-add-event" onClick={addEventClickHandler}>
-        Add Event
-      </button>
-      {addEventClicked ? (
-        <AddEventForm setAddEventClicked={setAddEventClicked} />
-      ) : (
-        <EventsList id={id} />
-      )}
-    </div>
       )}
     </div>
   );

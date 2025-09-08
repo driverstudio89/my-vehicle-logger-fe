@@ -1,4 +1,5 @@
 .event-form-container {
+position: relative;
 align-self: center;
 width: 50%;
 }
@@ -40,4 +41,19 @@ width: 50%;
     text-align: right;
     margin: 0px;
     padding: 0px;
+}
+
+.btn-close {
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;  
+}
+
+.btn-close img {
+    width: 24px;
+    height: 24px;
 }

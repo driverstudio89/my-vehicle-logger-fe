@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../css/AddVehicle.css";
 import { apiRequest } from "../services/api";
 import { useNavigate } from "react-router-dom";
+import closeIcon from "../assets/close.png";
 
 function AddVehicle() {
   const navigate = useNavigate();
@@ -27,12 +28,15 @@ function AddVehicle() {
 
   const handleAddVehicle = async (e) => {
     e.preventDefault();
-    
+
     const data = new FormData();
-    
-    data.append("addVehicleRequest", new Blob([JSON.stringify(formData)], { type: "application/json" }));
+
+    data.append(
+      "addVehicleRequest",
+      new Blob([JSON.stringify(formData)], { type: "application/json" })
+    );
     data.append("image", image);
-    try {          
+    try {
       const response = await apiRequest("/vehicles", {
         method: "POST",
         body: data,
@@ -80,19 +84,30 @@ function AddVehicle() {
     }
   };
 
+  const handleOnCancel = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate("/");
+    }
+  };
+
   return (
     <div className="add-vehicle">
       <h3>Add Vehicle</h3>
+      <button className="btn-close" onClick={handleOnCancel}>
+        <img src={closeIcon} alt="close" />
+      </button>
       <form onSubmit={handleAddVehicle} className="add-vehicle-form">
         <div className="form-group">
-        <label htmlFor="image">Image</label>
-            <input
-              id="image"
-              type="file"
-              name="image"
-              accept="image/*"
-              onChange={handleImageChange}
-            />
+          <label htmlFor="image">Image</label>
+          <input
+            id="image"
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
         </div>
 
         <div className="form-group">
@@ -176,7 +191,9 @@ function AddVehicle() {
             value={formData.color}
             onChange={handleChange}
             className="form-input">
-            <option key="color" value="default">Choose Color</option>
+            <option key="color" value="default">
+              Choose Color
+            </option>
             {colors.map((color) => (
               <option key={color.id} value={color}>
                 {color}
@@ -199,7 +216,9 @@ function AddVehicle() {
             value={formData.category}
             onChange={handleChange}
             className="form-input">
-            <option key="category" value="default">Choose category</option>
+            <option key="category" value="default">
+              Choose category
+            </option>
             {categories.map((category) => (
               <option key={category.id} value={category}>
                 {category}
@@ -222,7 +241,9 @@ function AddVehicle() {
             value={formData.engine}
             onChange={handleChange}
             className="form-input">
-            <option key="engine" value="default">Choose engine</option>
+            <option key="engine" value="default">
+              Choose engine
+            </option>
             {engines.map((engine) => (
               <option key={engine.id} value={engine}>
                 {engine}
@@ -235,6 +256,19 @@ function AddVehicle() {
             <p>{errors.engine}</p>
           </div>
         )}
+
+        <div className="form-group">
+          <label htmlFor="description">Description</label>
+          <textarea
+            id="description"
+            type="text"
+            name="description"
+            placeholder="Description"
+            value={formData.description}
+            onChange={handleChange}
+            className="form-input"
+          />
+        </div>
 
         <div className="form-group">
           <label htmlFor="lastKilometers">Kilometers</label>
@@ -253,19 +287,6 @@ function AddVehicle() {
             <p>{errors.lastKilometers}</p>
           </div>
         )}
-
-        <div className="form-group">
-          <label htmlFor="description">Description</label>
-          <textarea
-            id="description"
-            type="text"
-            name="description"
-            placeholder="Description"
-            value={formData.description}
-            onChange={handleChange}
-            className="form-input"
-          />
-        </div>
         {errors && (
           <div className="error">
             <p>{errors.description}</p>

@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     border: 2px solid rgb(241, 143, 23);
-    width: 80%;
+    width: 90%;
     align-self: center;
     margin: 20px;
     position: relative;
@@ -13,20 +13,26 @@
 .event-first-row {
     display: flex;
     direction: row;
+}
+
+.first-row-data {
+    display: flex;
+    direction: row;
+    flex-grow: 8;
     margin: 5px;
 }
 
-.event-first-row h4 {
-    flex: 1;
-    margin: 0px;
-}
-
 .buttons-group {
+    flex: 1;
     position: absolute;
     top: 2px;
     right: 5px;
-    display: flex;
+    flex-grow: 2;
     gap: 7px;
+}
+
+.event-first-row h4 {
+    margin: 0px;
 }
 
 .event-container hr {
@@ -43,6 +49,7 @@
 .event-first-row p {
     flex: 1;
     margin: 0px;
+    margin-right: 50px;
 }
 
 .event-description {

@@ -3,6 +3,7 @@ import "../css/AddEventForm.css";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { apiRequest } from "../services/api";
+import closeIcon from "../assets/close.png";
 
 function AddEventForm(props) {
 
@@ -29,6 +30,8 @@ function AddEventForm(props) {
 
   const handleAddEvent = async (e) => {
     e.preventDefault();
+    console.log(formData);
+    
 
     try {
       const response = await apiRequest(`/vehicles/${id}/events`, {
@@ -49,15 +52,19 @@ function AddEventForm(props) {
       }
     } catch(err) {
       console.log(err.message);
-      
     }
-
-
   }
+
+  const handleOnCancel = () => {
+    props.onCancel();
+  };
 
   return (
     <div className="event-form-container">
       <h3>Add Event</h3>
+      <button className="btn-close" onClick={handleOnCancel}>
+        <img src={closeIcon} alt="close" />
+      </button>
       <form onSubmit={handleAddEvent} className="event-form">
         <label htmlFor="name">Name:</label>
         <input

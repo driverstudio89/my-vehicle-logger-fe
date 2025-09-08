@@ -1,15 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../css/AddEventForm.css";
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { apiRequest } from "../services/api";
+import closeIcon from "../assets/close.png";
 
 function AddEventForm(props) {
-
-  const navigate = useNavigate();
   const [errors, setErrors] = useState("");
-
   const { id } = useParams();
+  const event = props.event;
 
   const [formData, setFormData] = useState({
     name: "",
@@ -18,6 +16,19 @@ function AddEventForm(props) {
     startDate: Date.now,
     endDate: Date.now,
   });
+
+  useEffect(() => {
+    if (event) {
+      setFormData((prev) => ({
+        ...prev,
+        name: event.name || "",
+        description: event.description || "",
+        kilometers: event.kilometers || "",
+        startDate: event.startDate || Date.now,
+        endDate: event.endDate || Date.now,
+      }));
+    }
+  }, [event]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,30 +42,35 @@ function AddEventForm(props) {
     e.preventDefault();
 
     try {
-      const response = await apiRequest(`/vehicles/${id}/events`, {
-        method: "POST",
+      const response = await apiRequest(`/vehicles/${id}/events/${event.id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
 
-      if (response.status === 201) {
-        const data = await response.json();
-        props.setAddEventClicked(prev => !prev);
-        navigate(`/vehicles/${id}`);
+      if (response.ok) {
+        props.onSuccess();
       } else {
         const data = await response.json().catch(() => ({}));
         setErrors(data);
       }
-    } catch(err) {
+    } catch (err) {
       console.log(err.message);
     }
-  }
+  };
+
+  const handleOnCancel = () => {
+    props.onCancel();
+  };
 
   return (
     <div className="event-form-container">
-      <h3>Add Event</h3>
+      <h3>Update Event</h3>
+      <button className="btn-close" onClick={handleOnCancel}>
+        <img src={closeIcon} alt="close" />
+      </button>
       <form onSubmit={handleAddEvent} className="event-form">
         <label htmlFor="name">Name:</label>
         <input
@@ -132,7 +148,7 @@ function AddEventForm(props) {
           </div>
         )}
         <button type="submit" className="btn-submit">
-          Add Event
+          Update
         </button>
       </form>
     </div>
