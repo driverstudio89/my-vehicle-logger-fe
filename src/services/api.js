@@ -1,7 +1,7 @@
-const API_BASE_URL = "http://localhost:8080";
+const API_BASE_URL = "https://my-vehicle-logger.onrender.com";
 
 export const login = async (email, password) => {
-  const response = await fetch(`http://localhost:8080/auth/login`, {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
