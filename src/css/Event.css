@@ -7,9 +7,8 @@
     width: 80%;
     align-self: center;
     margin: 20px;
+    position: relative;
 }
-
-
 
 .event-first-row {
     display: flex;
@@ -20,6 +19,14 @@
 .event-first-row h4 {
     flex: 1;
     margin: 0px;
+}
+
+.buttons-group {
+    position: absolute;
+    top: 2px;
+    right: 5px;
+    display: flex;
+    gap: 7px;
 }
 
 .event-container hr {
@@ -44,4 +51,9 @@
     text-align: left;
     width: 90%;
     align-self: center;
+}
+
+.btn-edit img, .btn-delete img{
+    width: 24px;
+    height: 24px;
 }

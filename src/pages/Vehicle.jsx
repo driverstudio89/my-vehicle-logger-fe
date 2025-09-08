@@ -2,10 +2,9 @@ import "../css/Vehicle.css";
 import { useEffect, useState } from "react";
 import AddEventForm from "../components/AddEventForm";
 import { apiRequest } from "../services/api";
-import { Route, useParams } from "react-router-dom";
+import {  useParams, useNavigate, useLocation } from "react-router-dom";
 import EventsList from "../components/EventsList";
 import { useAuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
 import noImage from "../assets/no_image.jpg";
 import editIcon from "../assets/edit.png";
 import deleteIcon from "../assets/delete.png";
@@ -14,6 +13,7 @@ function Vehicle() {
   const [addEventClicked, setAddEventClicked] = useState(false);
   const authContext = useAuthContext();
   const navigate = useNavigate();
+  const location = useLocation();
   const [errors, setErrors] = useState("");
 
   const { id } = useParams();
@@ -31,6 +31,7 @@ function Vehicle() {
     year: "",
     color: "",
     engine: "",
+    description: "",
     created: "",
   });
 
@@ -44,14 +45,17 @@ function Vehicle() {
     const loadVehicle = async () => {
       try {
         const myVehicle = await apiRequest(`/vehicles/${id}`);
-
         setVehicle(myVehicle);
       } catch (err) {
         console.log(err);
       }
     };
+
+    if (location.state?.refresh) {
+      setVehicle(null);
+    }
     loadVehicle();
-  }, []);
+  }, [location.key]);
 
   const handleEditVehicle = () => {
     navigate("/update-vehicle", {
@@ -75,11 +79,14 @@ function Vehicle() {
       setErrors(err);
       console.log(err);
     }
-    
   }
 
   return (
-    <div className="vehicle">
+    <div>
+      {!vehicle ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="vehicle">
 
       {errors && <div className="login-errors">
           <p>{errors.email}</p>
@@ -103,16 +110,18 @@ function Vehicle() {
           ) : (
             <img src={noImage} alt={vehicle.make} />
           )}
+          <p>{vehicle.description}</p>
         </div>
+        
         <div className="vehicle-page-info">
-          <h3>{vehicle.make}</h3>
-          <h3>{vehicle.model}</h3>
-          <p>{vehicle.registration}</p>
-          <p>{vehicle.lastKilometers} km</p>
-          <p>{vehicle.year}</p>
-          <p>{vehicle.color}</p>
-          <p>{vehicle.engine}</p>
-          <p>{vehicle.created}</p>
+          <h3>Make: {vehicle.make}</h3>
+          <h3>Model: {vehicle.model}</h3>
+          <p>Registration: {vehicle.registration}</p>
+          <p>Kilometers: {vehicle.lastKilometers} km</p>
+          <p>Year: {vehicle.year}</p>
+          <p>Color: {vehicle.color}</p>
+          <p>Engine: {vehicle.engine}</p>
+          <p>Created: {vehicle.created}</p>
         </div>
       </div>
       <button className="btn-add-event" onClick={addEventClickHandler}>
@@ -122,6 +131,8 @@ function Vehicle() {
         <AddEventForm setAddEventClicked={setAddEventClicked} />
       ) : (
         <EventsList id={id} />
+      )}
+    </div>
       )}
     </div>
   );

@@ -31,7 +31,7 @@
 }
 
 .vehicle-image {
-    flex: 7;
+    width: 65%;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -46,7 +46,7 @@
 }
 
 .vehicle-page-info {
-    flex: 3;
+    width: 35%;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -93,4 +93,9 @@
 .btn-edit img, .btn-delete img{
     width: 32px;
     height: 32px;
+}
+
+.vehicle-image p {
+    text-align: left;
+    padding: 0px 20px;
 }
