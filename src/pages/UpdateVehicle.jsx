@@ -8,7 +8,6 @@ function UpdateVehicle() {
   const location = useLocation();
   const data = location.state || {};
   const vehicle = data.vehicle;
-  console.log(data);
 
   const [formData, setFormData] = useState({
     make: "",
@@ -39,9 +38,6 @@ function UpdateVehicle() {
     }
   }, [vehicle]);
 
-  console.log(formData);
-  
-
   const [colors, setColor] = useState([]);
   const [categories, setCategory] = useState([]);
   const [engines, setEngine] = useState([]);
@@ -49,23 +45,26 @@ function UpdateVehicle() {
 
   const [image, setImage] = useState(null);
 
-  const handleAddVehicle = async (e) => {
+  const handleUpdateVehicle = async (e) => {
     e.preventDefault();
     
     const data = new FormData();
     
-    data.append("addVehicleRequest", new Blob([JSON.stringify(formData)], { type: "application/json" }));
+    data.append("updateVehicleRequest", new Blob([JSON.stringify(formData)], { type: "application/json" }));
     data.append("image", image);
+
+    console.log(data);
+    
     try {          
       const response = await apiRequest(`/vehicles/${vehicle.id}`, {
-        method: "UPDATE",
-        headers: {
-        },
+        method: "PUT",
         body: data,
       });
 
-      if (response.status === 201) {
+      if (response.ok) {
         const data = await response.json();
+        console.log(data);
+        
         const id = data.id;
         navigate(`/vehicles/${id}`);
       } else {
@@ -109,7 +108,7 @@ function UpdateVehicle() {
   return (
     <div className="add-vehicle">
       <h3>Update Vehicle</h3>
-      <form onSubmit={handleAddVehicle} className="add-vehicle-form">
+      <form onSubmit={handleUpdateVehicle} className="add-vehicle-form">
         <div className="form-group">
         <label htmlFor="image">Image</label>
             <input

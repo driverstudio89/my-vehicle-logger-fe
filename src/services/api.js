@@ -31,10 +31,9 @@ export const refreshAccessToken = async () => {
   return token;
 };
 
-export const apiRequest = async (
-  url,
-  { method = "GET", body, headers = {} } = {}
-) => {
+export const apiRequest = async (url, {
+  method = "GET", body, headers = {} } = {}) => {
+
   const doRequest = async () => {
     const token = localStorage.getItem("accessToken");
 
@@ -55,7 +54,6 @@ export const apiRequest = async (
           Authorization: `Bearer ${token}`,
           ...headers,
         },
-        credentials: "include",
         ...(body ? { body: body } : {}),
       });
     }

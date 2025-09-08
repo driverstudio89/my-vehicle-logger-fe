@@ -35,8 +35,6 @@ function AddVehicle() {
     try {          
       const response = await apiRequest("/vehicles", {
         method: "POST",
-        headers: {
-        },
         body: data,
       });
 
