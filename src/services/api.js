@@ -41,6 +41,8 @@ export const apiRequest = async (url, {
     const token = localStorage.getItem("accessToken");
 
     if (method === "GET") {
+      console.log(`${API_BASE_URL}${url}`);
+      
       return fetch(`${API_BASE_URL}${url}`, {
         method,
         headers: {
@@ -51,6 +53,7 @@ export const apiRequest = async (url, {
         ...(body ? { body: JSON.stringify(body) } : {}),
       });
     } else {
+      console.log(`${API_BASE_URL}${url}`);
       return fetch(`${API_BASE_URL}${url}`, {
         method,
         headers: {
