@@ -1,6 +1,8 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const login = async (email, password) => {
+  console.log("try to login");
+  
   const response = await fetch(`${API_BASE_URL}/auth/login`, {
     method: "POST",
     headers: {
@@ -35,6 +37,7 @@ export const apiRequest = async (url, {
   method = "GET", body, headers = {} } = {}) => {
 
   const doRequest = async () => {
+    console.log("try to fetch");
     const token = localStorage.getItem("accessToken");
 
     if (method === "GET") {
