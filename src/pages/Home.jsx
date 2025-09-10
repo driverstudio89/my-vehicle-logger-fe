@@ -1,6 +1,6 @@
+import "../css/Home.css";
 import { useEffect } from "react";
 import VehicleCard from "../components/VehicleCard";
-import "../css/Home.css";
 import { useState } from "react";
 import { apiRequest } from "../services/api.js";
 import { useAuthContext } from "../context/AuthContext";

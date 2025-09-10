@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import "../css/AddEventForm.css";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { apiRequest } from "../services/api";
 import closeIcon from "../assets/close.png";

@@ -1,7 +1,7 @@
+import "../css/Register.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext.jsx";
-import "../css/Register.css";
 import { apiRequest } from "../services/api.js";
 
 function Register() {

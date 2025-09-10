@@ -1,7 +1,7 @@
+import "../css/User.css"
 import { useEffect } from "react"
 import { apiRequest } from "../services/api";
 import { useState } from "react";
-import "../css/User.css"
 
 function User() {
 

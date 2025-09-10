@@ -1,7 +1,7 @@
+import "../css/EventsList.css";
 import { useState, useEffect } from "react";
 import Event from "../components/Event";
 import { apiRequest } from "../services/api";
-import "../css/EventsList.css";
 
 function EventsList({ id, onEditEvent }) {
   const [events, setEvents] = useState([]);
