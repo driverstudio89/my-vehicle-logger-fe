@@ -8,15 +8,15 @@ function AddVehicle() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    make: "ford",
-    model: "focus",
-    year: "2012",
-    registration: "cc1001cc",
-    color: "RED",
-    category: "CAR",
-    engine: "DIESEL",
-    lastKilometers: "344000",
-    description: "red ford",
+    make: "",
+    model: "",
+    year: "",
+    registration: "",
+    color: "",
+    category: "",
+    engine: "",
+    lastKilometers: "",
+    description: "",
   });
 
   const [colors, setColor] = useState([]);

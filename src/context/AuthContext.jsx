@@ -26,7 +26,6 @@ export const AuthProvider = ({ children }) => {
     };
 
     const logout = async () => {
-        console.log("logging out");
         
         await apiRequest("/auth/logout", {
             method: "POST",

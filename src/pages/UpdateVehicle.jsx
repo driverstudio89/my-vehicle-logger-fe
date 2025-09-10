@@ -52,8 +52,6 @@ function UpdateVehicle() {
     
     data.append("updateVehicleRequest", new Blob([JSON.stringify(formData)], { type: "application/json" }));
     data.append("image", image);
-
-    console.log(data);
     
     try {          
       const response = await apiRequest(`/vehicles/${vehicle.id}`, {
@@ -63,8 +61,6 @@ function UpdateVehicle() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
-        
         const id = data.id;
         navigate(`/vehicles/${id}`);
       } else {

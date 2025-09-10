@@ -30,9 +30,7 @@ function AddEventForm(props) {
 
   const handleAddEvent = async (e) => {
     e.preventDefault();
-    console.log(formData);
     
-
     try {
       const response = await apiRequest(`/vehicles/${id}/events`, {
         method: "POST",

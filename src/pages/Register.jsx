@@ -29,14 +29,11 @@ function Register() {
                    headers: {"Content-Type": "application/json"},
                    body: JSON.stringify({ email, password })}
             );
-            console.log(response);
             
             if (!!response.ok) {
               navigate("/profile")
             } else {
               const data = await response.json().catch(() => ({}));
-              console.log(data);
-              
               setErrors(data);
             }
       
