@@ -15,6 +15,16 @@ export const login = async (email, password) => {
   return response;
 };
 
+export const apiLogout = async () => {
+  
+  const response = await fetch(`${API_BASE_URL}/auth/logout`, {
+    method: "POST",
+    credentials: "include",
+  });
+
+  return response;
+};
+
 export const refreshAccessToken = async () => {
   const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
     method: "POST",

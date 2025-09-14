@@ -9,7 +9,6 @@ function Navbar() {
 
     const handleLogout = () => {
         authContext.logout();
-        navigate("/profile")
     }
     
     return <nav className="navbar">

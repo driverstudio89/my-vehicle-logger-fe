@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { apiRequest } from "../services/api";
+import { apiLogout, apiRequest } from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
@@ -27,13 +27,15 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         
-        await apiRequest("/auth/logout", {
-            method: "POST",
-        });
-        localStorage.removeItem("accessToken");
+        try {
+            await apiLogout();
+        } catch(err) {
+            console.error("Logout API failed", err);
+        } finally {
+            localStorage.removeItem("accessToken");
         setIsAuthenticated(false);     
         navigate("/profile")
-        
+        }
     };
 
     return <AuthContext.Provider value={ {isAuthenticated, login, logout, isLoading} }>
