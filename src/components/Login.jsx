@@ -7,8 +7,8 @@ import { Link } from "react-router-dom"
 
 function Login() {
   const authContext = useAuthContext();
-  const [email, setEmail] = useState("ivan@gmail.com");
-  const [password, setPassword] = useState("123456");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
 
   const navigate = useNavigate();
