@@ -12,9 +12,9 @@ function Register() {
     navigate("/");
   }
 
-  const [email, setEmail] = useState("ivan@gmail.com");
-  const [password, setPassword] = useState("123456");
-  const [confirmPassword, setConfirmPassword] = useState("123456");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState("");
 
   const handleRegister = async (e) => {
