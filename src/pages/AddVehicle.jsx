@@ -195,7 +195,7 @@ function AddVehicle() {
               Choose Color
             </option>
             {colors.map((color) => (
-              <option key={color.id} value={color}>
+              <option key={color} value={color}>
                 {color}
               </option>
             ))}
@@ -220,7 +220,7 @@ function AddVehicle() {
               Choose category
             </option>
             {categories.map((category) => (
-              <option key={category.id} value={category}>
+              <option key={category} value={category}>
                 {category}
               </option>
             ))}
@@ -245,7 +245,7 @@ function AddVehicle() {
               Choose engine
             </option>
             {engines.map((engine) => (
-              <option key={engine.id} value={engine}>
+              <option key={engine} value={engine}>
                 {engine}
               </option>
             ))}

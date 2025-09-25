@@ -1,14 +1,14 @@
 import "../css/AddEventForm.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { apiRequest } from "../services/api";
 import closeIcon from "../assets/close.png";
 
 function AddEventForm(props) {
-
   const navigate = useNavigate();
   const [errors, setErrors] = useState("");
+  const [eventCategories, setEventCategories] = useState([]);
 
   const { id } = useParams();
 
@@ -16,6 +16,7 @@ function AddEventForm(props) {
     name: "",
     description: "",
     kilometers: "",
+    eventCategory: "",
     startDate: Date.now,
     endDate: Date.now,
   });
@@ -28,9 +29,21 @@ function AddEventForm(props) {
     }));
   };
 
+  useEffect(() => {
+    const getEventOptions = async () => {
+      try {
+        const dataOptions = await apiRequest("/vehicles/events/options");
+        setEventCategories(dataOptions.eventCategories);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getEventOptions();
+  }, []);
+
   const handleAddEvent = async (e) => {
     e.preventDefault();
-    
+
     try {
       const response = await apiRequest(`/vehicles/${id}/events`, {
         method: "POST",
@@ -42,16 +55,16 @@ function AddEventForm(props) {
 
       if (response.status === 201) {
         const data = await response.json();
-        props.setAddEventClicked(prev => !prev);
+        props.setAddEventClicked((prev) => !prev);
         navigate(`/vehicles/${id}`);
       } else {
         const data = await response.json().catch(() => ({}));
         setErrors(data);
       }
-    } catch(err) {
+    } catch (err) {
       console.log(err.message);
     }
-  }
+  };
 
   const handleOnCancel = () => {
     props.onCancel();
@@ -79,6 +92,7 @@ function AddEventForm(props) {
             <p>{errors.name}</p>
           </div>
         )}
+
         <label htmlFor="description">Description:</label>
         <textarea
           id="description"
@@ -94,6 +108,7 @@ function AddEventForm(props) {
             <p>{errors.description}</p>
           </div>
         )}
+
         <label htmlFor="kilometers">Kilometers:</label>
         <input
           id="kilometes"
@@ -109,6 +124,30 @@ function AddEventForm(props) {
             <p>{errors.kilometers}</p>
           </div>
         )}
+
+        <label htmlFor="eventCategory">Category:</label>
+        <select
+          id="eventCategory"
+          type="text"
+          name="eventCategory"
+          placeholder="Category"
+          value={formData.eventCategory}
+          onChange={handleChange}
+          className="form-input"
+        >
+          <option key="eventCategory" value="default">Select a category</option>
+          {eventCategories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+        {errors && (
+          <div className="error">
+            <p>{errors.eventCategory}</p>
+          </div>
+        )}
+
         <label htmlFor="startDate">Start date:</label>
         <input
           id="startDate"
@@ -124,6 +163,7 @@ function AddEventForm(props) {
             <p>{errors.startDate}</p>
           </div>
         )}
+
         <label htmlFor="endDate">End date:</label>
         <input
           id="endDate"
@@ -139,6 +179,7 @@ function AddEventForm(props) {
             <p>{errors.endDate}</p>
           </div>
         )}
+
         <button type="submit" className="btn-submit">
           Add Event
         </button>

@@ -35,6 +35,7 @@ function Event({ event, onEditEvent }) {
         <div className="first-row-data">
           <h4>{event.name}</h4>
           <p>{event.kilometers}</p>
+          <p>{event.eventCategory}</p>
           <p>{event.startDate}</p>
           <p>{event.endDate}</p>
         </div>
