@@ -19,22 +19,22 @@ function UpdateVehicle() {
     engine: "",
     lastKilometers: "",
     description: "",
-  }); 
+  });
 
   useEffect(() => {
     if (vehicle) {
-        setFormData(prev => ({
-            ...prev,
-            make: vehicle.make || "",
-            model: vehicle.model || "",
-            year: vehicle.year || "",
-            registration: vehicle.registration || "",
-            color: vehicle.color || "",
-            category: vehicle.category || "",
-            engine: vehicle.engine || "",
-            lastKilometers: vehicle.lastKilometers || "",
-            description: vehicle.description || "",
-        }));
+      setFormData((prev) => ({
+        ...prev,
+        make: vehicle.make || "",
+        model: vehicle.model || "",
+        year: vehicle.year || "",
+        registration: vehicle.registration || "",
+        color: vehicle.color || "",
+        category: vehicle.category || "",
+        engine: vehicle.engine || "",
+        lastKilometers: vehicle.lastKilometers || "",
+        description: vehicle.description || "",
+      }));
     }
   }, [vehicle]);
 
@@ -42,18 +42,26 @@ function UpdateVehicle() {
   const [categories, setCategory] = useState([]);
   const [engines, setEngine] = useState([]);
   const [errors, setErrors] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [image, setImage] = useState(null);
 
   const handleUpdateVehicle = async (e) => {
     e.preventDefault();
-    
+
+    if (isLoading) return;
+
+    setIsLoading(true);
+
     const data = new FormData();
-    
-    data.append("updateVehicleRequest", new Blob([JSON.stringify(formData)], { type: "application/json" }));
+
+    data.append(
+      "updateVehicleRequest",
+      new Blob([JSON.stringify(formData)], { type: "application/json" })
+    );
     data.append("image", image);
-    
-    try {          
+
+    try {
       const response = await apiRequest(`/vehicles/${vehicle.id}`, {
         method: "PUT",
         body: data,
@@ -70,6 +78,7 @@ function UpdateVehicle() {
     } catch (err) {
       setErrors(err.massage);
     }
+    setIsLoading(false);
   };
 
   const handleChange = (e) => {
@@ -106,14 +115,14 @@ function UpdateVehicle() {
       <h3>Update Vehicle</h3>
       <form onSubmit={handleUpdateVehicle} className="add-vehicle-form">
         <div className="form-group">
-        <label htmlFor="image">Image</label>
-            <input
-              id="image"
-              type="file"
-              name="image"
-              accept="image/*"
-              onChange={handleImageChange}
-            />
+          <label htmlFor="image">Image</label>
+          <input
+            id="image"
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
         </div>
 
         <div className="form-group">
@@ -197,7 +206,9 @@ function UpdateVehicle() {
             value={formData.color}
             onChange={handleChange}
             className="form-input">
-            <option key="color" value="default">Choose Color</option>
+            <option key="color" value="default">
+              Choose Color
+            </option>
             {colors.map((color) => (
               <option key={color.id} value={color}>
                 {color}
@@ -220,7 +231,9 @@ function UpdateVehicle() {
             value={formData.category}
             onChange={handleChange}
             className="form-input">
-            <option key="category" value="default">Choose category</option>
+            <option key="category" value="default">
+              Choose category
+            </option>
             {categories.map((category) => (
               <option key={category.id} value={category}>
                 {category}
@@ -243,7 +256,9 @@ function UpdateVehicle() {
             value={formData.engine}
             onChange={handleChange}
             className="form-input">
-            <option key="engine" value="default">Choose engine</option>
+            <option key="engine" value="default">
+              Choose engine
+            </option>
             {engines.map((engine) => (
               <option key={engine.id} value={engine}>
                 {engine}
@@ -293,7 +308,9 @@ function UpdateVehicle() {
           </div>
         )}
 
-        <button className="btn-login">Update</button>
+        <button className="btn-login" disabled={isLoading}>
+          {isLoading ? "Updating..." : "Update"}
+        </button>
       </form>
     </div>
   );

@@ -7,6 +7,7 @@ import closeIcon from "../assets/close.png";
 function AddEventForm(props) {
   const [errors, setErrors] = useState("");
   const [eventCategories, setEventCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
   const event = props.event;
 
@@ -56,6 +57,10 @@ function AddEventForm(props) {
   const handleAddEvent = async (e) => {
     e.preventDefault();
 
+    if (isLoading) return;
+
+    setIsLoading(true);
+
     try {
       const response = await apiRequest(`/vehicles/${id}/events/${event.id}`, {
         method: "PUT",
@@ -74,6 +79,7 @@ function AddEventForm(props) {
     } catch (err) {
       console.log(err.message);
     }
+    setIsLoading(false);
   };
 
   const handleOnCancel = () => {
@@ -187,8 +193,8 @@ function AddEventForm(props) {
             <p>{errors.endDate}</p>
           </div>
         )}
-        <button type="submit" className="btn-submit">
-          Update
+        <button type="submit" className="btn-submit" disabled={isLoading}>
+          {isLoading ? "Updating..." : "Update"}
         </button>
       </form>
     </div>

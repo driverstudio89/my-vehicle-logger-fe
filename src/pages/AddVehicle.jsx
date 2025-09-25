@@ -23,11 +23,16 @@ function AddVehicle() {
   const [categories, setCategory] = useState([]);
   const [engines, setEngine] = useState([]);
   const [errors, setErrors] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [image, setImage] = useState(null);
 
   const handleAddVehicle = async (e) => {
     e.preventDefault();
+
+    if (isLoading) return;
+
+    setIsLoading(true);
 
     const data = new FormData();
 
@@ -51,8 +56,9 @@ function AddVehicle() {
         setErrors(data);
       }
     } catch (err) {
-      setErrors(err.massage);
+      setErrors(err.message);
     }
+    setIsLoading(false);
   };
 
   const handleChange = (e) => {
@@ -293,7 +299,9 @@ function AddVehicle() {
           </div>
         )}
 
-        <button className="btn-login">Add</button>
+        <button className="btn-login" disabled={isLoading}>
+          {isLoading ? "Adding..." : "Add"}
+        </button>
       </form>
     </div>
   );

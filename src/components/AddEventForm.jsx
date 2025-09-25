@@ -9,6 +9,7 @@ function AddEventForm(props) {
   const navigate = useNavigate();
   const [errors, setErrors] = useState("");
   const [eventCategories, setEventCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { id } = useParams();
 
@@ -44,6 +45,10 @@ function AddEventForm(props) {
   const handleAddEvent = async (e) => {
     e.preventDefault();
 
+    if (isLoading) return;
+
+    setIsLoading(true);
+
     try {
       const response = await apiRequest(`/vehicles/${id}/events`, {
         method: "POST",
@@ -64,6 +69,7 @@ function AddEventForm(props) {
     } catch (err) {
       console.log(err.message);
     }
+    setIsLoading(false);
   };
 
   const handleOnCancel = () => {
@@ -133,9 +139,10 @@ function AddEventForm(props) {
           placeholder="Category"
           value={formData.eventCategory}
           onChange={handleChange}
-          className="form-input"
-        >
-          <option key="eventCategory" value="default">Select a category</option>
+          className="form-input">
+          <option key="eventCategory" value="default">
+            Select a category
+          </option>
           {eventCategories.map((category) => (
             <option key={category} value={category}>
               {category}
@@ -180,8 +187,8 @@ function AddEventForm(props) {
           </div>
         )}
 
-        <button type="submit" className="btn-submit">
-          Add Event
+        <button type="submit" className="btn-submit" disabled={isLoading}>
+          {isLoading ? "Adding..." : "Add Event"}
         </button>
       </form>
     </div>
