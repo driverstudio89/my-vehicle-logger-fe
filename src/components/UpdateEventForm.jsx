@@ -6,6 +6,7 @@ import closeIcon from "../assets/close.png";
 
 function AddEventForm(props) {
   const [errors, setErrors] = useState("");
+  const [eventCategories, setEventCategories] = useState([]);
   const { id } = useParams();
   const event = props.event;
 
@@ -13,6 +14,7 @@ function AddEventForm(props) {
     name: "",
     description: "",
     kilometers: "",
+    eventCategory: "",
     startDate: Date.now,
     endDate: Date.now,
   });
@@ -24,6 +26,7 @@ function AddEventForm(props) {
         name: event.name || "",
         description: event.description || "",
         kilometers: event.kilometers || "",
+        eventCategory: event.eventCategory || "",
         startDate: event.startDate || Date.now,
         endDate: event.endDate || Date.now,
       }));
@@ -37,6 +40,18 @@ function AddEventForm(props) {
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    const getEventOptions = async () => {
+      try {
+        const dataOptions = await apiRequest("/vehicles/events/options");
+        setEventCategories(dataOptions.eventCategories);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getEventOptions();
+  }, []);
 
   const handleAddEvent = async (e) => {
     e.preventDefault();
@@ -117,6 +132,31 @@ function AddEventForm(props) {
             <p>{errors.kilometers}</p>
           </div>
         )}
+
+        <label htmlFor="eventCategory">Category:</label>
+        <select
+          id="eventCategory"
+          type="text"
+          name="eventCategory"
+          placeholder="Category"
+          value={formData.eventCategory}
+          onChange={handleChange}
+          className="form-input">
+          <option key="eventCategory" value="default">
+            Select a category
+          </option>
+          {eventCategories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+        {errors && (
+          <div className="error">
+            <p>{errors.eventCategory}</p>
+          </div>
+        )}
+
         <label htmlFor="startDate">Start date:</label>
         <input
           id="startDate"
