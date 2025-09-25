@@ -3,6 +3,7 @@
     background-color: #cda15d;
     display: flex;
     flex-direction: column;
+        flex: 0 1 auto;
     border: 2px solid rgb(241, 143, 23);
     width: 90%;
     align-self: center;
@@ -17,9 +18,9 @@
 
 .first-row-data {
     display: flex;
-    direction: row;
-    flex-grow: 8;
+    flex: 1 1 auto;
     margin: 5px;
+    margin-right: 70px;
 }
 
 .buttons-group {
@@ -33,6 +34,7 @@
 
 .event-first-row h4 {
     margin: 0px;
+    margin-left: 20px;
 }
 
 .event-container hr {
@@ -47,9 +49,8 @@
 }
 
 .event-first-row p {
-    flex: 1;
+    flex: 1 1 auto;
     margin: 0px;
-    margin-right: 50px;
 }
 
 .event-description {
