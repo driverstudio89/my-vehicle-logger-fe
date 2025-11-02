@@ -18,6 +18,7 @@ function AddEventForm(props) {
     eventCategory: "",
     startDate: Date.now,
     endDate: Date.now,
+    notification: false,
   });
 
   useEffect(() => {
@@ -30,15 +31,18 @@ function AddEventForm(props) {
         eventCategory: event.eventCategory || "",
         startDate: event.startDate || Date.now,
         endDate: event.endDate || Date.now,
+        notification: event.notification || false,
       }));
     }
+    console.log(event);
+    
   }, [event]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, type, value, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -193,6 +197,19 @@ function AddEventForm(props) {
             <p>{errors.endDate}</p>
           </div>
         )}
+
+        <div className="notification-row">
+          <label htmlFor="notification">Notification:</label>
+          <input
+            id="notidication"
+            type="checkbox"
+            name="notification"
+            checked={formData.notification}
+            onChange={handleChange}
+            className="form-input"
+          />
+        </div>
+
         <button type="submit" className="btn-submit" disabled={isLoading}>
           {isLoading ? "Updating..." : "Update"}
         </button>

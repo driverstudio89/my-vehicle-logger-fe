@@ -9,6 +9,7 @@ import { apiRequest } from "../services/api";
 function Event({ event, onEditEvent }) {
   const { id } = useParams();
   const [errors, setErrors] = useState("");
+  const navigate = useNavigate();
 
   const handleEditEvent = () => {
     if (onEditEvent) onEditEvent(event);
@@ -40,6 +41,7 @@ function Event({ event, onEditEvent }) {
           <p>{event.endDate}</p>
         </div>
         <div className="buttons-group">
+          {event.notification && <span className="green-dot" aria-hidden="true" />}
           <button className="btn-edit" onClick={handleEditEvent}>
             <img src={editIcon} alt="edit" />
           </button>

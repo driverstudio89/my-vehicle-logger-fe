@@ -65,3 +65,13 @@
     width: 24px;
     height: 24px;
 }
+
+.green-dot {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #16A34A;
+  border: 2px solid #1d8341;
+  margin-right: 5px;
+}

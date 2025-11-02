@@ -20,13 +20,15 @@
 
 .vehicle h3 {
     font-size: 32px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .vehicle-info-container {
     display: flex;
     flex-direction: row;
     gap: 100px;
-    padding: 25px 25px;
+    padding: 5px 25px;
     align-self: center;
 }
 
@@ -41,6 +43,7 @@
 .vehicle-image img {
     margin: 20px;
     width: 350px;
+    max-height: 350px;
     object-fit: cover;
     border-radius: 10px;
 }
